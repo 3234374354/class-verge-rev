@@ -1,3 +1,15 @@
+name: Release Build
+
+on:
+  workflow_dispatch:
+permissions: write-all
+env:
+  CARGO_INCREMENTAL: 0
+  RUST_BACKTRACE: short
+concurrency:
+  group: "${{ github.workflow }} - ${{ github.head_ref || github.ref }}"
+  cancel-in-progress: ${{ github.ref != 'refs/heads/main' }}
+
 jobs:
   release:
     strategy:
