@@ -482,7 +482,7 @@ pub async fn reinstall_service() -> Result<()> {
 
 /// check the windows service status
 pub async fn check_service() -> Result<JsonResponse> {
-    let url = format!("{SERVICE_URL}/get_clash");
+    let url = format!("{SERVICE_URL}/get_classes");
     let response = reqwest::ClientBuilder::new()
         .no_proxy()
         .timeout(Duration::from_secs(3))
@@ -490,10 +490,10 @@ pub async fn check_service() -> Result<JsonResponse> {
         .get(url)
         .send()
         .await
-        .context("failed to connect to the Clash Verge Service")?
+        .context("failed to connect to the classes Verge Service")?
         .json::<JsonResponse>()
         .await
-        .context("failed to parse the Clash Verge Service response")?;
+        .context("failed to parse the classes Verge Service response")?;
 
     Ok(response)
 }
@@ -508,10 +508,10 @@ pub async fn check_service_version() -> Result<String> {
         .get(url)
         .send()
         .await
-        .context("failed to connect to the Clash Verge Service")?
+        .context("failed to connect to the classes Verge Service")?
         .json::<VersionJsonResponse>()
         .await
-        .context("failed to parse the Clash Verge Service version response")?;
+        .context("failed to parse the classes Verge Service version response")?;
 
     match response.data {
         Some(data) => Ok(data.version),
@@ -570,12 +570,12 @@ pub async fn check_service_needs_reinstall() -> bool {
 pub(super) async fn start_with_existing_service(config_file: &PathBuf) -> Result<()> {
     log::info!(target:"app", "attempting to start core with existing service");
 
-    let clash_core = { Config::verge().latest().clash_core.clone() };
-    let clash_core = clash_core.unwrap_or("verge-mihomo".into());
+    let classes_core = { Config::verge().latest().classes_core.clone() };
+    let classes_core = classes_core.unwrap_or("verge-mihomo".into());
 
     let bin_ext = if cfg!(windows) { ".exe" } else { "" };
-    let clash_bin = format!("{clash_core}{bin_ext}");
-    let bin_path = current_exe()?.with_file_name(clash_bin);
+    let classes_bin = format!("{classes_core}{bin_ext}");
+    let bin_path = current_exe()?.with_file_name(classes_bin);
     let bin_path = dirs::path_to_str(&bin_path)?;
 
     let config_dir = dirs::app_home_dir()?;
@@ -587,7 +587,7 @@ pub(super) async fn start_with_existing_service(config_file: &PathBuf) -> Result
     let config_file = dirs::path_to_str(config_file)?;
 
     let mut map = HashMap::new();
-    map.insert("core_type", clash_core.as_str());
+    map.insert("core_type", classes_core.as_str());
     map.insert("bin_path", bin_path);
     map.insert("config_dir", config_dir);
     map.insert("config_file", config_file);
@@ -595,7 +595,7 @@ pub(super) async fn start_with_existing_service(config_file: &PathBuf) -> Result
 
     log::info!(target:"app", "start service: {:?}", map.clone());
 
-    let url = format!("{SERVICE_URL}/start_clash");
+    let url = format!("{SERVICE_URL}/start_classes");
     let _ = reqwest::ClientBuilder::new()
         .no_proxy()
         .build()?
@@ -603,12 +603,12 @@ pub(super) async fn start_with_existing_service(config_file: &PathBuf) -> Result
         .json(&map)
         .send()
         .await
-        .context("failed to connect to the Clash Verge Service")?;
+        .context("failed to connect to the classes Verge Service")?;
 
     Ok(())
 }
 
-/// start the clash by service
+/// start the classes by service
 pub(super) async fn run_core_by_service(config_file: &PathBuf) -> Result<()> {
     log::info!(target: "app", "正在尝试通过服务启动核心");
 
@@ -708,16 +708,16 @@ pub(super) async fn run_core_by_service(config_file: &PathBuf) -> Result<()> {
     }
 }
 
-/// stop the clash by service
+/// stop the classes by service
 pub(super) async fn stop_core_by_service() -> Result<()> {
-    let url = format!("{SERVICE_URL}/stop_clash");
+    let url = format!("{SERVICE_URL}/stop_classes");
     let _ = reqwest::ClientBuilder::new()
         .no_proxy()
         .build()?
         .post(url)
         .send()
         .await
-        .context("failed to connect to the Clash Verge Service")?;
+        .context("failed to connect to the classes Verge Service")?;
 
     Ok(())
 }

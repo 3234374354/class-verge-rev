@@ -1,16 +1,16 @@
 import { createContext, useContext, useMemo } from "react";
 import useSWR from "swr";
 import useSWRSubscription from "swr/subscription";
-import { getProxies, getConnections, getRules, getClashConfig, getProxyProviders, getRuleProviders } from "@/services/api";
+import { getProxies, getConnections, getRules, getclassesConfig, getProxyProviders, getRuleProviders } from "@/services/api";
 import { getSystemProxy, getRunningMode, getAppUptime } from "@/services/cmds";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { createAuthSockette } from "@/utils/websocket";
 import { useVisibility } from "@/hooks/use-visibility";
 
 // 定义AppDataContext类型 - 使用宽松类型
 interface AppDataContextType {
   proxies: any;
-  clashConfig: any;
+  classesConfig: any;
   rules: any[];
   sysproxy: any;
   runningMode?: string;
@@ -26,7 +26,7 @@ interface AppDataContextType {
   traffic: {up: number; down: number};
   memory: {inuse: number};
   refreshProxy: () => Promise<any>;
-  refreshClashConfig: () => Promise<any>;
+  refreshclassesConfig: () => Promise<any>;
   refreshRules: () => Promise<any>;
   refreshSysproxy: () => Promise<any>;
   refreshProxyProviders: () => Promise<any>;
@@ -39,7 +39,7 @@ const AppDataContext = createContext<AppDataContextType | null>(null);
 
 // 全局数据提供者组件
 export const AppDataProvider = ({ children }: { children: React.ReactNode }) => {
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const pageVisible = useVisibility();
   
   // 基础数据 - 中频率更新 (5秒)
@@ -54,9 +54,9 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
     }
   );
   
-  const { data: clashConfig, mutate: refreshClashConfig } = useSWR(
-    "getClashConfig", 
-    getClashConfig, 
+  const { data: classesConfig, mutate: refreshclassesConfig } = useSWR(
+    "getclassesConfig", 
+    getclassesConfig, 
     { 
       refreshInterval: 5000, 
       revalidateOnFocus: false,
@@ -131,11 +131,11 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
   // 连接数据 - 使用WebSocket实时更新
   const { data: connectionsData = { connections: [], uploadTotal: 0, downloadTotal: 0 } } = 
     useSWRSubscription(
-      clashInfo && pageVisible ? "connections" : null,
+      classesInfo && pageVisible ? "connections" : null,
       (_key, { next }) => {
-        if (!clashInfo || !pageVisible) return () => {};
+        if (!classesInfo || !pageVisible) return () => {};
         
-        const { server = "", secret = "" } = clashInfo;
+        const { server = "", secret = "" } = classesInfo;
         if (!server) return () => {};
         
         const socket = createAuthSockette(`${server}/connections`, secret, {
@@ -181,11 +181,11 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
   
   // 流量和内存数据 - 通过WebSocket获取实时流量数据
   const { data: trafficData = { up: 0, down: 0 } } = useSWRSubscription(
-    clashInfo && pageVisible ? "traffic" : null,
+    classesInfo && pageVisible ? "traffic" : null,
     (_key, { next }) => {
-      if (!clashInfo || !pageVisible) return () => {};
+      if (!classesInfo || !pageVisible) return () => {};
       
-      const { server = "", secret = "" } = clashInfo;
+      const { server = "", secret = "" } = classesInfo;
       if (!server) return () => {};
       
       const socket = createAuthSockette(`${server}/traffic`, secret, {
@@ -204,11 +204,11 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
   );
   
   const { data: memoryData = { inuse: 0 } } = useSWRSubscription(
-    clashInfo && pageVisible ? "memory" : null,
+    classesInfo && pageVisible ? "memory" : null,
     (_key, { next }) => {
-      if (!clashInfo || !pageVisible) return () => {};
+      if (!classesInfo || !pageVisible) return () => {};
       
-      const { server = "", secret = "" } = clashInfo;
+      const { server = "", secret = "" } = classesInfo;
       if (!server) return () => {};
       
       const socket = createAuthSockette(`${server}/memory`, secret, {
@@ -230,7 +230,7 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
   const refreshAll = async () => {
     await Promise.all([
       refreshProxy(),
-      refreshClashConfig(),
+      refreshclassesConfig(),
       refreshRules(),
       refreshSysproxy(),
       refreshProxyProviders(),
@@ -242,7 +242,7 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
   const value = useMemo(() => ({
     // 数据
     proxies: proxiesData,
-    clashConfig,
+    classesConfig,
     rules: rulesData || [],
     sysproxy,
     runningMode,
@@ -266,17 +266,17 @@ export const AppDataProvider = ({ children }: { children: React.ReactNode }) => 
     
     // 刷新方法
     refreshProxy,
-    refreshClashConfig,
+    refreshclassesConfig,
     refreshRules,
     refreshSysproxy,
     refreshProxyProviders,
     refreshRuleProviders,
     refreshAll
   }), [
-    proxiesData, clashConfig, rulesData, sysproxy, 
+    proxiesData, classesConfig, rulesData, sysproxy, 
     runningMode, uptimeData, connectionsData,
     trafficData, memoryData, proxyProviders, ruleProviders,
-    refreshProxy, refreshClashConfig, refreshRules, refreshSysproxy,
+    refreshProxy, refreshclassesConfig, refreshRules, refreshSysproxy,
     refreshProxyProviders, refreshRuleProviders
   ]);
 

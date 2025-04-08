@@ -15,9 +15,9 @@ const ItemWrapper = styled("div")`
 
 const HOTKEY_FUNC = [
   "open_or_close_dashboard",
-  "clash_mode_rule",
-  "clash_mode_global",
-  "clash_mode_direct",
+  "classes_mode_rule",
+  "classes_mode_global",
+  "classes_mode_direct",
   "toggle_system_proxy",
   "toggle_tun_mode",
   "entry_lightweight_mode",

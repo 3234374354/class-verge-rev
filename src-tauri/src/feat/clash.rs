@@ -8,12 +8,12 @@ use crate::{
 use serde_yaml::{Mapping, Value};
 use tauri::Manager;
 
-/// Restart the Clash core
-pub fn restart_clash_core() {
+/// Restart the classes core
+pub fn restart_classes_core() {
     tauri::async_runtime::spawn(async {
         match CoreManager::global().restart_core().await {
             Ok(_) => {
-                handle::Handle::refresh_clash();
+                handle::Handle::refresh_classes();
                 handle::Handle::notice_message("set_config::ok", "ok");
             }
             Err(err) => {
@@ -37,7 +37,7 @@ pub fn restart_app() {
     });
 }
 
-fn after_change_clash_mode() {
+fn after_change_classes_mode() {
     tauri::async_runtime::spawn(async {
         match MihomoManager::global().get_connections().await {
             Ok(connections) => {
@@ -56,8 +56,8 @@ fn after_change_clash_mode() {
     });
 }
 
-/// Change Clash mode (rule/global/direct/script)
-pub fn change_clash_mode(mode: String) {
+/// Change classes mode (rule/global/direct/script)
+pub fn change_classes_mode(mode: String) {
     let mut mapping = Mapping::new();
     mapping.insert(Value::from("mode"), mode.clone().into());
     // Convert YAML mapping to JSON Value
@@ -65,14 +65,14 @@ pub fn change_clash_mode(mode: String) {
         "mode": mode
     });
     tauri::async_runtime::spawn(async move {
-        log::debug!(target: "app", "change clash mode to {mode}");
+        log::debug!(target: "app", "change classes mode to {mode}");
         match MihomoManager::global().patch_configs(json_value).await {
             Ok(_) => {
                 // 更新订阅
-                Config::clash().data().patch_config(mapping);
+                Config::classes().data().patch_config(mapping);
 
-                if Config::clash().data().save_config().is_ok() {
-                    handle::Handle::refresh_clash();
+                if Config::classes().data().save_config().is_ok() {
+                    handle::Handle::refresh_classes();
                     logging_error!(Type::Tray, true, tray::Tray::global().update_menu());
                     logging_error!(Type::Tray, true, tray::Tray::global().update_icon(None));
                 }
@@ -82,7 +82,7 @@ pub fn change_clash_mode(mode: String) {
                     .auto_close_connection
                     .unwrap_or(false);
                 if is_auto_close_connection {
-                    after_change_clash_mode();
+                    after_change_classes_mode();
                 }
             }
             Err(err) => println!("{err}"),
@@ -98,7 +98,7 @@ pub async fn test_delay(url: String) -> anyhow::Result<u32> {
     let port = Config::verge()
         .latest()
         .verge_mixed_port
-        .unwrap_or(Config::clash().data().get_mixed_port());
+        .unwrap_or(Config::classes().data().get_mixed_port());
     let tun_mode = Config::verge().latest().enable_tun_mode.unwrap_or(false);
 
     let proxy_scheme = format!("http://127.0.0.1:{port}");

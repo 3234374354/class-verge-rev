@@ -27,14 +27,14 @@ import {
 } from "@mui/icons-material";
 import { useNavigate } from "react-router-dom";
 import { ProxyTunCard } from "@/components/home/proxy-tun-card";
-import { ClashModeCard } from "@/components/home/clash-mode-card";
+import { classesModeCard } from "@/components/home/classes-mode-card";
 import { EnhancedTrafficStats } from "@/components/home/enhanced-traffic-stats";
 import { useState } from "react";
 import { HomeProfileCard } from "@/components/home/home-profile-card";
 import { EnhancedCard } from "@/components/home/enhanced-card";
 import { CurrentProxyCard } from "@/components/home/current-proxy-card";
 import { BasePage } from "@/components/base";
-import { ClashInfoCard } from "@/components/home/clash-info-card";
+import { classesInfoCard } from "@/components/home/classes-info-card";
 import { SystemInfoCard } from "@/components/home/system-info-card";
 import { useLockFn } from "ahooks";
 import {
@@ -66,7 +66,7 @@ interface HomeCardsSettings {
   mode: boolean;
   traffic: boolean;
   info: boolean;
-  clashinfo: boolean;
+  classesinfo: boolean;
   systeminfo: boolean;
   test: boolean;
   ip: boolean;
@@ -176,11 +176,11 @@ const HomeSettingsDialog = ({
           <FormControlLabel
             control={
               <Checkbox
-                checked={cards.clashinfo || false}
-                onChange={() => handleToggle("clashinfo")}
+                checked={cards.classesinfo || false}
+                onChange={() => handleToggle("classesinfo")}
               />
             }
-            label={t("Clash Info Cards")}
+            label={t("classes Info Cards")}
           />
           <FormControlLabel
             control={
@@ -220,7 +220,7 @@ export const HomePage = () => {
       network: true,
       mode: true,
       traffic: true,
-      clashinfo: true,
+      classesinfo: true,
       systeminfo: true,
       test: true,
       ip: true,
@@ -244,7 +244,7 @@ export const HomePage = () => {
 
   // 文档链接函数
   const toGithubDoc = useLockFn(() => {
-    return openWebUrl("https://clash-verge-rev.github.io/index.html");
+    return openWebUrl("https://classes-verge-rev.github.io/index.html");
   });
 
   // 新增：打开设置弹窗
@@ -311,7 +311,7 @@ export const HomePage = () => {
 
         {homeCards.mode && (
           <Grid size={6}>
-            <ClashModeEnhancedCard />
+            <classesModeEnhancedCard />
           </Grid>
         )}
 
@@ -339,10 +339,10 @@ export const HomePage = () => {
             <IpInfoCard />
           </Grid>
         )}
-        {/* Clash信息 */}
-        {homeCards.clashinfo && (
+        {/* classes信息 */}
+        {homeCards.classesinfo && (
           <Grid size={6}>
-            <ClashInfoCard />
+            <classesInfoCard />
           </Grid>
         )}
         {/* 系统信息 */}
@@ -379,8 +379,8 @@ const NetworkSettingsCard = () => {
   );
 };
 
-// 增强版 Clash 模式卡片组件
-const ClashModeEnhancedCard = () => {
+// 增强版 classes 模式卡片组件
+const classesModeEnhancedCard = () => {
   const { t } = useTranslation();
   return (
     <EnhancedCard
@@ -389,7 +389,7 @@ const ClashModeEnhancedCard = () => {
       iconColor="info"
       action={null}
     >
-      <ClashModeCard />
+      <classesModeCard />
     </EnhancedCard>
   );
 };

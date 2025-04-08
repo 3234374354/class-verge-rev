@@ -2,41 +2,41 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useLockFn } from "ahooks";
 import { List, ListItem, ListItemText, TextField } from "@mui/material";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { BaseDialog, DialogRef, Notice, Switch } from "@/components/base";
 import { useVerge } from "@/hooks/use-verge";
 import getSystem from "@/utils/get-system";
 const OS = getSystem();
 
-export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
+export const classesPortViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
 
-  const { clashInfo, patchInfo } = useClashInfo();
+  const { classesInfo, patchInfo } = useclassesInfo();
   const { verge, patchVerge } = useVerge();
   const [open, setOpen] = useState(false);
   const [redirPort, setRedirPort] = useState(
-    verge?.verge_redir_port ?? clashInfo?.redir_port ?? 7895
+    verge?.verge_redir_port ?? classesInfo?.redir_port ?? 7895
   );
   const [redirEnabled, setRedirEnabled] = useState(
     verge?.verge_redir_enabled ?? false
   );
   const [tproxyPort, setTproxyPort] = useState(
-    verge?.verge_tproxy_port ?? clashInfo?.tproxy_port ?? 7896
+    verge?.verge_tproxy_port ?? classesInfo?.tproxy_port ?? 7896
   );
   const [tproxyEnabled, setTproxyEnabled] = useState(
     verge?.verge_tproxy_enabled ?? false
   );
   const [mixedPort, setMixedPort] = useState(
-    verge?.verge_mixed_port ?? clashInfo?.mixed_port ?? 7897
+    verge?.verge_mixed_port ?? classesInfo?.mixed_port ?? 7897
   );
   const [socksPort, setSocksPort] = useState(
-    verge?.verge_socks_port ?? clashInfo?.socks_port ?? 7898
+    verge?.verge_socks_port ?? classesInfo?.socks_port ?? 7898
   );
   const [socksEnabled, setSocksEnabled] = useState(
     verge?.verge_socks_enabled ?? false
   );
   const [port, setPort] = useState(
-    verge?.verge_port ?? clashInfo?.port ?? 7899
+    verge?.verge_port ?? classesInfo?.port ?? 7899
   );
   const [httpEnabled, setHttpEnabled] = useState(
     verge?.verge_http_enabled ?? false
@@ -145,7 +145,7 @@ export const ClashPortViewer = forwardRef<DialogRef>((props, ref) => {
         });
       }
       setOpen(false);
-      Notice.success(t("Clash Port Modified"), 1000);
+      Notice.success(t("classes Port Modified"), 1000);
     } catch (err: any) {
       Notice.error(err.message || err.toString(), 4000);
     }

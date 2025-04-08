@@ -27,14 +27,14 @@ import MonacoEditor from "react-monaco-editor";
 import { configureMonacoYaml } from "monaco-yaml";
 import { type JSONSchema7 } from "json-schema";
 import metaSchema from "meta-json-schema/schemas/meta-json-schema.json";
-import mergeSchema from "meta-json-schema/schemas/clash-verge-merge-json-schema.json";
+import mergeSchema from "meta-json-schema/schemas/classes-verge-merge-json-schema.json";
 import pac from "types-pac/pac.d.ts?raw";
 const appWindow = getCurrentWebviewWindow();
 
 type Language = "yaml" | "javascript" | "css";
 type Schema<T extends Language> = LanguageSchemaMap[T];
 interface LanguageSchemaMap {
-  yaml: "clash" | "merge";
+  yaml: "classes" | "merge";
   javascript: never;
   css: never;
 }
@@ -62,12 +62,12 @@ const monacoInitialization = () => {
     schemas: [
       {
         uri: "http://example.com/meta-json-schema.json",
-        fileMatch: ["**/*.clash.yaml"],
+        fileMatch: ["**/*.classes.yaml"],
         // @ts-ignore
         schema: metaSchema as JSONSchema7,
       },
       {
-        uri: "http://example.com/clash-verge-merge-json-schema.json",
+        uri: "http://example.com/classes-verge-merge-json-schema.json",
         fileMatch: ["**/*.merge.yaml"],
         // @ts-ignore
         schema: mergeSchema as JSONSchema7,

@@ -7,7 +7,7 @@ import { GitHub, HelpOutlineRounded, Telegram } from "@mui/icons-material";
 import { openWebUrl } from "@/services/cmds";
 import SettingVergeBasic from "@/components/setting/setting-verge-basic";
 import SettingVergeAdvanced from "@/components/setting/setting-verge-advanced";
-import SettingClash from "@/components/setting/setting-clash";
+import Settingclasses from "@/components/setting/setting-classes";
 import SettingSystem from "@/components/setting/setting-system";
 import { useThemeMode } from "@/services/states";
 
@@ -19,15 +19,15 @@ const SettingPage = () => {
   };
 
   const toGithubRepo = useLockFn(() => {
-    return openWebUrl("https://github.com/clash-verge-rev/clash-verge-rev");
+    return openWebUrl("https://github.com/classes-verge-rev/classes-verge-rev");
   });
 
   const toGithubDoc = useLockFn(() => {
-    return openWebUrl("https://clash-verge-rev.github.io/index.html");
+    return openWebUrl("https://classes-verge-rev.github.io/index.html");
   });
 
   const toTelegramChannel = useLockFn(() => {
-    return openWebUrl("https://t.me/clash_verge_re");
+    return openWebUrl("https://t.me/classes_verge_re");
   });
 
   const mode = useThemeMode();
@@ -83,7 +83,7 @@ const SettingPage = () => {
               backgroundColor: isDark ? "#282a36" : "#ffffff",
             }}
           >
-            <SettingClash onError={onError} />
+            <Settingclasses onError={onError} />
           </Box>
         </Grid>
         <Grid size={6}>

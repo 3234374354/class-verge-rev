@@ -28,7 +28,7 @@ import React from "react";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 import { useListen } from "@/hooks/use-listen";
 import { listen } from "@tauri-apps/api/event";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { initGlobalLogService } from "@/services/global-log-service";
 
 const appWindow = getCurrentWebviewWindow();
@@ -128,7 +128,7 @@ const Layout = () => {
   const { t } = useTranslation();
   const { theme } = useCustomTheme();
   const { verge } = useVerge();
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const [enableLog] = useEnableLog();
   const { language, start_page } = verge ?? {};
   const navigate = useNavigate();
@@ -146,22 +146,22 @@ const Layout = () => {
 
   // 初始化全局日志服务
   useEffect(() => {
-    if (clashInfo) {
-      const { server = "", secret = "" } = clashInfo;
+    if (classesInfo) {
+      const { server = "", secret = "" } = classesInfo;
       // 使用本地存储中的enableLog值初始化全局日志服务
       initGlobalLogService(server, secret, enableLog, "info");
     }
-  }, [clashInfo, enableLog]);
+  }, [classesInfo, enableLog]);
 
   // 设置监听器
   useEffect(() => {
     const listeners = [
       // 配置更新监听
-      addListener("verge://refresh-clash-config", async () => {
+      addListener("verge://refresh-classes-config", async () => {
         await getAxios(true);
         mutate("getProxies");
         mutate("getVersion");
-        mutate("getClashConfig");
+        mutate("getclassesConfig");
         mutate("getProxyProviders");
       }),
 

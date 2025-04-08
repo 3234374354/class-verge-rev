@@ -2,23 +2,23 @@ import { forwardRef, useImperativeHandle, useState } from "react";
 import { useLockFn } from "ahooks";
 import { useTranslation } from "react-i18next";
 import { List, ListItem, ListItemText, TextField } from "@mui/material";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { BaseDialog, DialogRef, Notice } from "@/components/base";
 
 export const ControllerViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
   const [open, setOpen] = useState(false);
 
-  const { clashInfo, patchInfo } = useClashInfo();
+  const { classesInfo, patchInfo } = useclassesInfo();
 
-  const [controller, setController] = useState(clashInfo?.server || "");
-  const [secret, setSecret] = useState(clashInfo?.secret || "");
+  const [controller, setController] = useState(classesInfo?.server || "");
+  const [secret, setSecret] = useState(classesInfo?.secret || "");
 
   useImperativeHandle(ref, () => ({
     open: () => {
       setOpen(true);
-      setController(clashInfo?.server || "");
-      setSecret(clashInfo?.secret || "");
+      setController(classesInfo?.server || "");
+      setSecret(classesInfo?.secret || "");
     },
     close: () => setOpen(false),
   }));

@@ -22,7 +22,7 @@ import {
   ITrafficItem,
 } from "./enhanced-traffic-graph";
 import { useVisibility } from "@/hooks/use-visibility";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { useVerge } from "@/hooks/use-verge";
 import { createAuthSockette } from "@/utils/websocket";
 import parseTraffic from "@/utils/parse-traffic";
@@ -152,7 +152,7 @@ CompactStatCard.displayName = "CompactStatCard";
 export const EnhancedTrafficStats = () => {
   const { t } = useTranslation();
   const theme = useTheme();
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const { verge } = useVerge();
   const trafficRef = useRef<EnhancedTrafficGraphRef>(null);
   const pageVisible = useVisibility();
@@ -254,9 +254,9 @@ export const EnhancedTrafficStats = () => {
 
   // 使用 WebSocket 连接获取数据 - 合并流量和内存连接逻辑
   useEffect(() => {
-    if (!clashInfo || !pageVisible) return;
+    if (!classesInfo || !pageVisible) return;
 
-    const { server, secret = "" } = clashInfo;
+    const { server, secret = "" } = classesInfo;
     if (!server) return;
 
     // 清理现有连接的函数
@@ -282,7 +282,7 @@ export const EnhancedTrafficStats = () => {
     });
 
     return cleanupSockets;
-  }, [clashInfo, pageVisible, handleTrafficUpdate, handleMemoryUpdate]);
+  }, [classesInfo, pageVisible, handleTrafficUpdate, handleMemoryUpdate]);
 
   // 执行垃圾回收
   const handleGarbageCollection = useCallback(async () => {

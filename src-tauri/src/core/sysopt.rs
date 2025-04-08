@@ -75,7 +75,7 @@ impl Sysopt {
         let port = Config::verge()
             .latest()
             .verge_mixed_port
-            .unwrap_or(Config::clash().data().get_mixed_port());
+            .unwrap_or(Config::classes().data().get_mixed_port());
         let pac_port = IVerge::get_singleton_port();
 
         let (sys_enable, pac_enable) = {
@@ -314,7 +314,7 @@ impl Sysopt {
                     Config::verge()
                         .latest()
                         .verge_mixed_port
-                        .unwrap_or(Config::clash().data().get_mixed_port())
+                        .unwrap_or(Config::classes().data().get_mixed_port())
                 };
                 let pac_port = IVerge::get_singleton_port();
                 #[cfg(not(target_os = "windows"))]

@@ -54,7 +54,7 @@ const SIDECAR_HOST = target
       .toString()
       .match(/(?<=host: ).+(?=\s*)/g)[0];
 
-/* ======= clash meta alpha======= */
+/* ======= classes meta alpha======= */
 const META_ALPHA_VERSION_URL =
   "https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha/version.txt";
 const META_ALPHA_URL_PREFIX = `https://github.com/MetaCubeX/mihomo/releases/download/Prerelease-Alpha`;
@@ -101,7 +101,7 @@ async function getLatestAlphaVersion() {
   }
 }
 
-/* ======= clash meta stable ======= */
+/* ======= classes meta stable ======= */
 const META_VERSION_URL =
   "https://github.com/MetaCubeX/mihomo/releases/latest/download/version.txt";
 const META_URL_PREFIX = `https://github.com/MetaCubeX/mihomo/releases/download`;
@@ -153,20 +153,20 @@ async function getLatestReleaseVersion() {
  */
 if (!META_MAP[`${platform}-${arch}`]) {
   throw new Error(
-    `clash meta alpha unsupported platform "${platform}-${arch}"`,
+    `classes meta alpha unsupported platform "${platform}-${arch}"`,
   );
 }
 
 if (!META_ALPHA_MAP[`${platform}-${arch}`]) {
   throw new Error(
-    `clash meta alpha unsupported platform "${platform}-${arch}"`,
+    `classes meta alpha unsupported platform "${platform}-${arch}"`,
   );
 }
 
 /**
  * core info
  */
-function clashMetaAlpha() {
+function classesMetaAlpha() {
   const name = META_ALPHA_MAP[`${platform}-${arch}`];
   const isWin = platform === "win32";
   const urlExt = isWin ? "zip" : "gz";
@@ -183,7 +183,7 @@ function clashMetaAlpha() {
   };
 }
 
-function clashMeta() {
+function classesMeta() {
   const name = META_MAP[`${platform}-${arch}`];
   const isWin = platform === "win32";
   const urlExt = isWin ? "zip" : "gz";
@@ -381,7 +381,7 @@ const resolvePlugin = async () => {
 // service chmod
 const resolveServicePermission = async () => {
   const serviceExecutables = [
-    "clash-verge-service*",
+    "classes-verge-service*",
     "install-service*",
     "uninstall-service*",
   ];
@@ -429,14 +429,14 @@ async function resolveLocales() {
 /**
  * main
  */
-const SERVICE_URL = `https://github.com/clash-verge-rev/clash-verge-service/releases/download/${SIDECAR_HOST}`;
+const SERVICE_URL = `https://github.com/classes-verge-rev/classes-verge-service/releases/download/${SIDECAR_HOST}`;
 
 const resolveService = () => {
   let ext = platform === "win32" ? ".exe" : "";
   let suffix = platform === "linux" ? "-" + SIDECAR_HOST : "";
   resolveResource({
-    file: "clash-verge-service" + suffix + ext,
-    downloadURL: `${SERVICE_URL}/clash-verge-service${ext}`,
+    file: "classes-verge-service" + suffix + ext,
+    downloadURL: `${SERVICE_URL}/classes-verge-service${ext}`,
   });
 };
 
@@ -483,21 +483,21 @@ const resolveEnableLoopback = () =>
 const resolveWinSysproxy = () =>
   resolveResource({
     file: "sysproxy.exe",
-    downloadURL: `https://github.com/clash-verge-rev/sysproxy/releases/download/${arch}/sysproxy.exe`,
+    downloadURL: `https://github.com/classes-verge-rev/sysproxy/releases/download/${arch}/sysproxy.exe`,
   });
 
 const tasks = [
-  // { name: "clash", func: resolveClash, retry: 5 },
+  // { name: "classes", func: resolveclasses, retry: 5 },
   {
     name: "verge-mihomo-alpha",
     func: () =>
-      getLatestAlphaVersion().then(() => resolveSidecar(clashMetaAlpha())),
+      getLatestAlphaVersion().then(() => resolveSidecar(classesMetaAlpha())),
     retry: 5,
   },
   {
     name: "verge-mihomo",
     func: () =>
-      getLatestReleaseVersion().then(() => resolveSidecar(clashMeta())),
+      getLatestReleaseVersion().then(() => resolveSidecar(classesMeta())),
     retry: 5,
   },
   { name: "plugin", func: resolvePlugin, retry: 5, winOnly: true },

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Typography, Stack, Divider } from "@mui/material";
 import { DeveloperBoardOutlined } from "@mui/icons-material";
-import { useClash } from "@/hooks/use-clash";
+import { useclasses } from "@/hooks/use-classes";
 import { EnhancedCard } from "./enhanced-card";
 import { useMemo } from "react";
 import { useAppData } from "@/providers/app-data-provider";
@@ -14,17 +14,17 @@ const formatUptime = (uptimeMs: number) => {
   return `${hours}:${minutes.toString().padStart(2, "0")}:${seconds.toString().padStart(2, "0")}`;
 };
 
-export const ClashInfoCard = () => {
+export const classesInfoCard = () => {
   const { t } = useTranslation();
-  const { version: clashVersion } = useClash();
-  const { clashConfig, sysproxy, rules, uptime } = useAppData();
+  const { version: classesVersion } = useclasses();
+  const { classesConfig, sysproxy, rules, uptime } = useAppData();
 
   // 使用useMemo缓存格式化后的uptime，避免频繁计算
   const formattedUptime = useMemo(() => formatUptime(uptime), [uptime]);
 
   // 使用备忘录组件内容，减少重新渲染
   const cardContent = useMemo(() => {
-    if (!clashConfig) return null;
+    if (!classesConfig) return null;
     
     return (
       <Stack spacing={1.5}>
@@ -33,7 +33,7 @@ export const ClashInfoCard = () => {
             {t("Core Version")}
           </Typography>
           <Typography variant="body2" fontWeight="medium">
-            {clashVersion || "-"}
+            {classesVersion || "-"}
           </Typography>
         </Stack>
         <Divider />
@@ -51,7 +51,7 @@ export const ClashInfoCard = () => {
             {t("Mixed Port")}
           </Typography>
           <Typography variant="body2" fontWeight="medium">
-            {clashConfig["mixed-port"] || "-"}
+            {classesConfig["mixed-port"] || "-"}
           </Typography>
         </Stack>
         <Divider />
@@ -74,11 +74,11 @@ export const ClashInfoCard = () => {
         </Stack>
       </Stack>
     );
-  }, [clashConfig, clashVersion, t, formattedUptime, rules.length, sysproxy]);
+  }, [classesConfig, classesVersion, t, formattedUptime, rules.length, sysproxy]);
 
   return (
     <EnhancedCard
-      title={t("Clash Info")}
+      title={t("classes Info")}
       icon={<DeveloperBoardOutlined />}
       iconColor="warning"
       action={null}

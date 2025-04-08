@@ -151,7 +151,7 @@ const ProfilePage = () => {
     } catch (err: any) {
       // 首次导入失败，尝试使用自身代理
       const errmsg = err.message || err.toString();
-      Notice.info(t("Import failed, retrying with Clash proxy..."));
+      Notice.info(t("Import failed, retrying with classes proxy..."));
       
       try {
         // 使用自身代理尝试导入
@@ -161,7 +161,7 @@ const ProfilePage = () => {
         });
         
         // 回退导入成功
-        Notice.success(t("Profile Imported with Clash proxy"));
+        Notice.success(t("Profile Imported with classes proxy"));
         setUrl("");
         mutateProfiles();
         await onEnhance(false);
@@ -169,7 +169,7 @@ const ProfilePage = () => {
         // 回退导入也失败
         const retryErrmsg = retryErr?.message || retryErr.toString();
         Notice.error(
-          `${t("Import failed even with Clash proxy")}: ${retryErrmsg}`,
+          `${t("Import failed even with classes proxy")}: ${retryErrmsg}`,
         );
       }
     } finally {
@@ -422,7 +422,7 @@ const ProfilePage = () => {
                         if (prev !== curr && profiles.current === item.uid) {
                           await onEnhance(false);
                           //  await restartCore();
-                          //   Notice.success(t("Clash Core Restarted"), 1000);
+                          //   Notice.success(t("classes Core Restarted"), 1000);
                         }
                       }}
                       onDelete={() => onDelete(item.uid)}

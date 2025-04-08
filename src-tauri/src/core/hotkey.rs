@@ -200,9 +200,9 @@ impl Hotkey {
                     );
                 }
             }
-            "clash_mode_rule" => || feat::change_clash_mode("rule".into()),
-            "clash_mode_global" => || feat::change_clash_mode("global".into()),
-            "clash_mode_direct" => || feat::change_clash_mode("direct".into()),
+            "classes_mode_rule" => || feat::change_classes_mode("rule".into()),
+            "classes_mode_global" => || feat::change_classes_mode("global".into()),
+            "classes_mode_direct" => || feat::change_classes_mode("direct".into()),
             "toggle_system_proxy" => || feat::toggle_system_proxy(),
             "toggle_tun_mode" => || feat::toggle_tun_mode(None),
             "entry_lightweight_mode" => || entry_lightweight_mode(),

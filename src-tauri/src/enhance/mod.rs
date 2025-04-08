@@ -16,13 +16,13 @@ type ResultLog = Vec<(String, String)>;
 /// 返回最终订阅、该订阅包含的键、和script执行的结果
 pub async fn enhance() -> (Mapping, Vec<String>, HashMap<String, ResultLog>) {
     // config.yaml 的订阅
-    let clash_config = { Config::clash().latest().0.clone() };
+    let classes_config = { Config::classes().latest().0.clone() };
 
-    let (clash_core, enable_tun, enable_builtin, socks_enabled, http_enabled, enable_dns_settings) = {
+    let (classes_core, enable_tun, enable_builtin, socks_enabled, http_enabled, enable_dns_settings) = {
         let verge = Config::verge();
         let verge = verge.latest();
         (
-            verge.clash_core.clone(),
+            verge.classes_core.clone(),
             verge.enable_tun_mode.unwrap_or(false),
             verge.enable_builtin_enhanced.unwrap_or(true),
             verge.verge_socks_enabled.unwrap_or(false),
@@ -195,7 +195,7 @@ pub async fn enhance() -> (Mapping, Vec<String>, HashMap<String, ResultLog>) {
     }
 
     // 合并默认的config
-    for (key, value) in clash_config.into_iter() {
+    for (key, value) in classes_config.into_iter() {
         if key.as_str() == Some("tun") {
             let mut tun = config.get_mut("tun").map_or(Mapping::new(), |val| {
                 val.as_mapping().cloned().unwrap_or(Mapping::new())
@@ -236,7 +236,7 @@ pub async fn enhance() -> (Mapping, Vec<String>, HashMap<String, ResultLog>) {
     if enable_builtin {
         ChainItem::builtin()
             .into_iter()
-            .filter(|(s, _)| s.is_support(clash_core.as_ref()))
+            .filter(|(s, _)| s.is_support(classes_core.as_ref()))
             .map(|(_, c)| c)
             .for_each(|item| {
                 log::debug!(target: "app", "run builtin script {}", item.uid);

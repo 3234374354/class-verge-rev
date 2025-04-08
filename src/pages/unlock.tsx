@@ -34,8 +34,8 @@ interface UnlockItem {
 }
 
 // 用于存储测试结果的本地存储键名
-const UNLOCK_RESULTS_STORAGE_KEY = "clash_verge_unlock_results";
-const UNLOCK_RESULTS_TIME_KEY = "clash_verge_unlock_time";
+const UNLOCK_RESULTS_STORAGE_KEY = "classes_verge_unlock_results";
+const UNLOCK_RESULTS_TIME_KEY = "classes_verge_unlock_time";
 
 const UnlockPage = () => {
   const { t } = useTranslation();

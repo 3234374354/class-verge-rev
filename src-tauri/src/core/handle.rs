@@ -51,12 +51,12 @@ impl Handle {
         window
     }
 
-    pub fn refresh_clash() {
+    pub fn refresh_classes() {
         if let Some(window) = Self::global().get_window() {
             logging_error!(
                 Type::Frontend,
                 true,
-                window.emit("verge://refresh-clash-config", "yes")
+                window.emit("verge://refresh-classes-config", "yes")
             );
         }
     }

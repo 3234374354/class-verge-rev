@@ -2,13 +2,13 @@ import useSWR, { mutate } from "swr";
 import { useLockFn } from "ahooks";
 import { getAxios, getVersion } from "@/services/api";
 import {
-  getClashInfo,
-  patchClashConfig,
+  getclassesInfo,
+  patchclassesConfig,
   getRuntimeConfig,
 } from "@/services/cmds";
 
-export const useClash = () => {
-  const { data: clash, mutate: mutateClash } = useSWR(
+export const useclasses = () => {
+  const { data: classes, mutate: mutateclasses } = useSWR(
     "getRuntimeConfig",
     getRuntimeConfig,
   );
@@ -18,9 +18,9 @@ export const useClash = () => {
     getVersion,
   );
 
-  const patchClash = useLockFn(async (patch: Partial<IConfigData>) => {
-    await patchClashConfig(patch);
-    mutateClash();
+  const patchclasses = useLockFn(async (patch: Partial<IConfigData>) => {
+    await patchclassesConfig(patch);
+    mutateclasses();
   });
 
   const version = versionData?.premium
@@ -30,18 +30,18 @@ export const useClash = () => {
       : versionData?.version || "-";
 
   return {
-    clash,
+    classes,
     version,
-    mutateClash,
+    mutateclasses,
     mutateVersion,
-    patchClash,
+    patchclasses,
   };
 };
 
-export const useClashInfo = () => {
-  const { data: clashInfo, mutate: mutateInfo } = useSWR(
-    "getClashInfo",
-    getClashInfo,
+export const useclassesInfo = () => {
+  const { data: classesInfo, mutate: mutateInfo } = useSWR(
+    "getclassesInfo",
+    getclassesInfo,
   );
 
   const patchInfo = async (
@@ -119,15 +119,15 @@ export const useClashInfo = () => {
       }
     }
 
-    await patchClashConfig(patch);
+    await patchclassesConfig(patch);
     mutateInfo();
-    mutate("getClashConfig");
+    mutate("getclassesConfig");
     // 刷新接口
     getAxios(true);
   };
 
   return {
-    clashInfo,
+    classesInfo,
     mutateInfo,
     patchInfo,
   };

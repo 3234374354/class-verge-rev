@@ -31,7 +31,7 @@ pub fn find_unused_port() -> Result<u16> {
             let port = Config::verge()
                 .latest()
                 .verge_mixed_port
-                .unwrap_or(Config::clash().data().get_mixed_port());
+                .unwrap_or(Config::classes().data().get_mixed_port());
             log::warn!(target: "app", "use default port: {}", port);
             Ok(port)
         }
@@ -158,7 +158,7 @@ pub fn create_window(is_showup: bool) {
                 "main".to_string(),
                 tauri::WebviewUrl::App("index.html".into()),
             )
-            .title("Clash Verge")
+            .title("classes Verge")
             .inner_size(890.0, 700.0)
             .min_inner_size(620.0, 550.0)
             .decorations(false)
@@ -187,7 +187,7 @@ pub fn create_window(is_showup: bool) {
         "main".to_string(),
         tauri::WebviewUrl::App("index.html".into()),
     )
-    .title("Clash Verge")
+    .title("classes Verge")
     .decorations(false)
     .inner_size(890.0, 700.0)
     .min_inner_size(620.0, 550.0)
@@ -259,7 +259,7 @@ pub async fn resolve_scheme(param: String) -> Result<()> {
         }
     };
 
-    if link_parsed.scheme() == "clash" || link_parsed.scheme() == "clash-verge" {
+    if link_parsed.scheme() == "classes" || link_parsed.scheme() == "classes-verge" {
         let name = link_parsed
             .query_pairs()
             .find(|(key, _)| key == "name")
@@ -303,13 +303,13 @@ pub async fn resolve_scheme(param: String) -> Result<()> {
 
 fn resolve_random_port_config() -> Result<()> {
     let verge_config = Config::verge();
-    let clash_config = Config::clash();
+    let classes_config = Config::classes();
     let enable_random_port = verge_config.latest().enable_random_port.unwrap_or(false);
 
     let default_port = verge_config
         .latest()
         .verge_mixed_port
-        .unwrap_or(clash_config.data().get_mixed_port());
+        .unwrap_or(classes_config.data().get_mixed_port());
 
     let port = if enable_random_port {
         find_unused_port().unwrap_or(default_port)
@@ -325,8 +325,8 @@ fn resolve_random_port_config() -> Result<()> {
 
     let mut mapping = Mapping::new();
     mapping.insert("mixed-port".into(), port.into());
-    clash_config.data().patch_config(mapping);
-    clash_config.data().save_config()?;
+    classes_config.data().patch_config(mapping);
+    classes_config.data().save_config()?;
     Ok(())
 }
 

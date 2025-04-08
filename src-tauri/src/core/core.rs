@@ -47,7 +47,7 @@ impl fmt::Display for RunningMode {
     }
 }
 
-const CLASH_CORES: [&str; 2] = ["verge-mihomo", "verge-mihomo-alpha"];
+const classes_CORES: [&str; 2] = ["verge-mihomo", "verge-mihomo-alpha"];
 
 impl CoreManager {
     /// 检查文件是否为脚本文件
@@ -134,14 +134,14 @@ impl CoreManager {
     pub async fn use_default_config(&self, msg_type: &str, msg_content: &str) -> Result<()> {
         let runtime_path = dirs::app_home_dir()?.join(RUNTIME_CONFIG);
         *Config::runtime().draft() = IRuntime {
-            config: Some(Config::clash().latest().0.clone()),
+            config: Some(Config::classes().latest().0.clone()),
             exists_keys: vec![],
             chain_logs: Default::default(),
         };
         help::save_yaml(
             &runtime_path,
-            &Config::clash().latest().0,
-            Some("# Clash Verge Runtime"),
+            &Config::classes().latest().0,
+            Some("# classes Verge Runtime"),
         )?;
         handle::Handle::notice_message(msg_type, msg_content);
         Ok(())
@@ -191,7 +191,7 @@ impl CoreManager {
             match self.is_script_file(config_path) {
                 Ok(result) => result,
                 Err(err) => {
-                    // 如果无法确定文件类型，尝试使用Clash内核验证
+                    // 如果无法确定文件类型，尝试使用classes内核验证
                     logging!(
                         warn,
                         Type::Config,
@@ -216,12 +216,12 @@ impl CoreManager {
             return self.validate_script_file(config_path).await;
         }
 
-        // 对YAML配置文件使用Clash内核验证
+        // 对YAML配置文件使用classes内核验证
         logging!(
             info,
             Type::Config,
             true,
-            "使用Clash内核验证配置文件: {}",
+            "使用classes内核验证配置文件: {}",
             config_path
         );
         self.validate_config_internal(config_path).await
@@ -242,19 +242,19 @@ impl CoreManager {
             config_path
         );
 
-        let clash_core = { Config::verge().latest().clash_core.clone() };
-        let clash_core = clash_core.unwrap_or("verge-mihomo".into());
-        logging!(info, Type::Config, true, "使用内核: {}", clash_core);
+        let classes_core = { Config::verge().latest().classes_core.clone() };
+        let classes_core = classes_core.unwrap_or("verge-mihomo".into());
+        logging!(info, Type::Config, true, "使用内核: {}", classes_core);
 
         let app_handle = handle::Handle::global().app_handle().unwrap();
         let app_dir = dirs::app_home_dir()?;
         let app_dir_str = dirs::path_to_str(&app_dir)?;
         logging!(info, Type::Config, true, "验证目录: {}", app_dir_str);
 
-        // 使用子进程运行clash验证配置
+        // 使用子进程运行classes验证配置
         let output = app_handle
             .shell()
-            .sidecar(clash_core)?
+            .sidecar(classes_core)?
             .args(["-t", "-d", app_dir_str, "-f", config_path])
             .output()
             .await?;
@@ -435,15 +435,15 @@ impl CoreManager {
         let app_handle = handle::Handle::global()
             .app_handle()
             .ok_or(anyhow::anyhow!("failed to get app handle"))?;
-        let clash_core = Config::verge()
+        let classes_core = Config::verge()
             .latest()
-            .clash_core
+            .classes_core
             .clone()
             .unwrap_or("verge-mihomo".to_string());
         let config_dir = dirs::app_home_dir()?;
         let (_, child) = app_handle
             .shell()
-            .sidecar(&clash_core)?
+            .sidecar(&classes_core)?
             .args([
                 "-d",
                 dirs::path_to_str(&config_dir)?,
@@ -646,20 +646,20 @@ impl CoreManager {
     }
 
     /// 切换核心
-    pub async fn change_core(&self, clash_core: Option<String>) -> Result<(), String> {
-        if clash_core.is_none() {
-            let error_message = "Clash core should not be Null";
+    pub async fn change_core(&self, classes_core: Option<String>) -> Result<(), String> {
+        if classes_core.is_none() {
+            let error_message = "classes core should not be Null";
             logging!(error, Type::Core, true, "{}", error_message);
             return Err(error_message.to_string());
         }
-        let core: &str = &clash_core.clone().unwrap();
-        if !CLASH_CORES.contains(&core) {
-            let error_message = format!("Clash core invalid name: {}", core);
+        let core: &str = &classes_core.clone().unwrap();
+        if !classes_CORES.contains(&core) {
+            let error_message = format!("classes core invalid name: {}", core);
             logging!(error, Type::Core, true, "{}", error_message);
             return Err(error_message);
         }
 
-        Config::verge().draft().clash_core = clash_core.clone();
+        Config::verge().draft().classes_core = classes_core.clone();
         Config::verge().apply();
         logging_error!(Type::Core, true, Config::verge().latest().save_file());
 

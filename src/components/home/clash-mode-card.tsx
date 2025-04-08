@@ -2,7 +2,7 @@ import { useTranslation } from "react-i18next";
 import { Box, Typography, Paper, Stack, Fade } from "@mui/material";
 import { useLockFn } from "ahooks";
 import { closeAllConnections } from "@/services/api";
-import { patchClashMode } from "@/services/cmds";
+import { patchclassesMode } from "@/services/cmds";
 import { useVerge } from "@/hooks/use-verge";
 import {
   LanguageRounded,
@@ -12,16 +12,16 @@ import {
 import { useMemo } from "react";
 import { useAppData } from "@/providers/app-data-provider";
 
-export const ClashModeCard = () => {
+export const classesModeCard = () => {
   const { t } = useTranslation();
   const { verge } = useVerge();
-  const { clashConfig, refreshProxy } = useAppData();
+  const { classesConfig, refreshProxy } = useAppData();
 
   // 支持的模式列表
   const modeList = useMemo(() => ["rule", "global", "direct"] as const, []);
 
   // 直接使用API返回的模式，不维护本地状态
-  const currentMode = clashConfig?.mode?.toLowerCase();
+  const currentMode = classesConfig?.mode?.toLowerCase();
 
   // 模式图标映射
   const modeIcons = useMemo(() => ({
@@ -38,7 +38,7 @@ export const ClashModeCard = () => {
     }
 
     try {
-      await patchClashMode(mode);
+      await patchclassesMode(mode);
       // 使用共享的刷新方法
       refreshProxy();
     } catch (error) {

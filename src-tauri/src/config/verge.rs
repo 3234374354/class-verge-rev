@@ -33,7 +33,7 @@ pub struct IVerge {
     /// enable traffic graph default is true
     pub traffic_graph: Option<bool>,
 
-    /// show memory info (only for Clash Meta)
+    /// show memory info (only for classes Meta)
     pub enable_memory_usage: Option<bool>,
 
     /// enable group icon
@@ -55,7 +55,7 @@ pub struct IVerge {
     /// tun tray icon
     pub tun_tray_icon: Option<bool>,
 
-    /// clash tun mode
+    /// classes tun mode
     pub enable_tun_mode: Option<bool>,
 
     /// can the app auto startup
@@ -94,9 +94,9 @@ pub struct IVerge {
     /// web ui list
     pub web_ui_list: Option<Vec<String>>,
 
-    /// clash core path
+    /// classes core path
     #[serde(skip_serializing_if = "Option::is_none")]
-    pub clash_core: Option<String>,
+    pub classes_core: Option<String>,
 
     /// hotkey map
     /// format: {func},{key}
@@ -137,7 +137,7 @@ pub struct IVerge {
     /// 是否启用随机端口
     pub enable_random_port: Option<bool>,
 
-    /// verge 的各种 port 用于覆盖 clash 的各种 port
+    /// verge 的各种 port 用于覆盖 classes 的各种 port
     #[cfg(not(target_os = "windows"))]
     pub verge_redir_port: Option<u16>,
 
@@ -253,7 +253,7 @@ impl IVerge {
 
     pub fn template() -> Self {
         Self {
-            clash_core: Some("verge-mihomo".into()),
+            classes_core: Some("verge-mihomo".into()),
             language: Some(Self::get_system_language()),
             theme_mode: Some("system".into()),
             #[cfg(not(target_os = "windows"))]
@@ -313,7 +313,7 @@ impl IVerge {
 
     /// Save IVerge App Config
     pub fn save_file(&self) -> Result<()> {
-        help::save_yaml(&dirs::verge_path()?, &self, Some("# Clash Verge Config"))
+        help::save_yaml(&dirs::verge_path()?, &self, Some("# classes Verge Config"))
     }
 
     /// patch verge config
@@ -371,7 +371,7 @@ impl IVerge {
 
         patch!(theme_setting);
         patch!(web_ui_list);
-        patch!(clash_core);
+        patch!(classes_core);
         patch!(hotkeys);
         patch!(enable_global_hotkey);
 
@@ -454,7 +454,7 @@ pub struct IVergeResponse {
     pub pac_file_content: Option<String>,
     pub theme_setting: Option<IVergeTheme>,
     pub web_ui_list: Option<Vec<String>>,
-    pub clash_core: Option<String>,
+    pub classes_core: Option<String>,
     pub hotkeys: Option<Vec<String>>,
     pub auto_close_connection: Option<bool>,
     pub auto_check_update: Option<bool>,
@@ -522,7 +522,7 @@ impl From<IVerge> for IVergeResponse {
             pac_file_content: verge.pac_file_content,
             theme_setting: verge.theme_setting,
             web_ui_list: verge.web_ui_list,
-            clash_core: verge.clash_core,
+            classes_core: verge.classes_core,
             hotkeys: verge.hotkeys,
             auto_close_connection: verge.auto_close_connection,
             auto_check_update: verge.auto_check_update,

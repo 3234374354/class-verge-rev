@@ -7,13 +7,13 @@ import {
   LanRounded,
 } from "@mui/icons-material";
 import { DialogRef, Notice, Switch } from "@/components/base";
-import { useClash } from "@/hooks/use-clash";
+import { useclasses } from "@/hooks/use-classes";
 import { GuardState } from "./mods/guard-state";
 import { WebUIViewer } from "./mods/web-ui-viewer";
-import { ClashPortViewer } from "./mods/clash-port-viewer";
+import { classesPortViewer } from "./mods/classes-port-viewer";
 import { ControllerViewer } from "./mods/controller-viewer";
 import { SettingList, SettingItem } from "./mods/setting-comp";
-import { ClashCoreViewer } from "./mods/clash-core-viewer";
+import { classesCoreViewer } from "./mods/classes-core-viewer";
 import { invoke_uwp_tool } from "@/services/cmds";
 import getSystem from "@/utils/get-system";
 import { useVerge } from "@/hooks/use-verge";
@@ -31,10 +31,10 @@ interface Props {
   onError: (err: Error) => void;
 }
 
-const SettingClash = ({ onError }: Props) => {
+const Settingclasses = ({ onError }: Props) => {
   const { t } = useTranslation();
 
-  const { clash, version, mutateClash, patchClash } = useClash();
+  const { classes, version, mutateclasses, patchclasses } = useclasses();
   const { verge, mutateVerge, patchVerge } = useVerge();
 
   const {
@@ -43,7 +43,7 @@ const SettingClash = ({ onError }: Props) => {
     "log-level": logLevel,
     "unified-delay": unifiedDelay,
     dns,
-  } = clash ?? {};
+  } = classes ?? {};
 
   const { enable_random_port = false, verge_mixed_port } = verge ?? {};
 
@@ -69,7 +69,7 @@ const SettingClash = ({ onError }: Props) => {
 
   const onSwitchFormat = (_e: any, value: boolean) => value;
   const onChangeData = (patch: Partial<IConfigData>) => {
-    mutateClash((old) => ({ ...(old! || {}), ...patch }), false);
+    mutateclasses((old) => ({ ...(old! || {}), ...patch }), false);
   };
   const onChangeVerge = (patch: Partial<IVergeConfig>) => {
     mutateVerge({ ...verge, ...patch }, false);
@@ -94,7 +94,7 @@ const SettingClash = ({ onError }: Props) => {
       await patchVerge({ enable_dns_settings: enable });
       await invoke("apply_dns_config", { apply: enable });
       setTimeout(() => {
-        mutateClash();
+        mutateclasses();
       }, 500); // 延迟500ms确保后端完成处理
     } catch (err: any) {
       // 如果出错，恢复原始状态
@@ -109,11 +109,11 @@ const SettingClash = ({ onError }: Props) => {
   });
 
   return (
-    <SettingList title={t("Clash Setting")}>
+    <SettingList title={t("classes Setting")}>
       <WebUIViewer ref={webRef} />
-      <ClashPortViewer ref={portRef} />
+      <classesPortViewer ref={portRef} />
       <ControllerViewer ref={ctrlRef} />
-      <ClashCoreViewer ref={coreRef} />
+      <classesCoreViewer ref={coreRef} />
       <NetworkInterfaceViewer ref={networkRef} />
       <DnsViewer ref={dnsRef} />
 
@@ -136,7 +136,7 @@ const SettingClash = ({ onError }: Props) => {
           onCatch={onError}
           onFormat={onSwitchFormat}
           onChange={(e) => onChangeData({ "allow-lan": e })}
-          onGuard={(e) => patchClash({ "allow-lan": e })}
+          onGuard={(e) => patchclasses({ "allow-lan": e })}
         >
           <Switch edge="end" />
         </GuardState>
@@ -165,7 +165,7 @@ const SettingClash = ({ onError }: Props) => {
           onCatch={onError}
           onFormat={onSwitchFormat}
           onChange={(e) => onChangeData({ ipv6: e })}
-          onGuard={(e) => patchClash({ ipv6: e })}
+          onGuard={(e) => patchclasses({ ipv6: e })}
         >
           <Switch edge="end" />
         </GuardState>
@@ -186,7 +186,7 @@ const SettingClash = ({ onError }: Props) => {
           onCatch={onError}
           onFormat={onSwitchFormat}
           onChange={(e) => onChangeData({ "unified-delay": e })}
-          onGuard={(e) => patchClash({ "unified-delay": e })}
+          onGuard={(e) => patchclasses({ "unified-delay": e })}
         >
           <Switch edge="end" />
         </GuardState>
@@ -199,12 +199,12 @@ const SettingClash = ({ onError }: Props) => {
         }
       >
         <GuardState
-          // clash premium 2022.08.26 值为warn
+          // classes premium 2022.08.26 值为warn
           value={logLevel === "warn" ? "warning" : (logLevel ?? "info")}
           onCatch={onError}
           onFormat={(e: any) => e.target.value}
           onChange={(e) => onChangeData({ "log-level": e })}
-          onGuard={(e) => patchClash({ "log-level": e })}
+          onGuard={(e) => patchclasses({ "log-level": e })}
         >
           <Select size="small" sx={{ width: 100, "> div": { py: "7.5px" } }}>
             <MenuItem value="debug">Debug</MenuItem>
@@ -255,7 +255,7 @@ const SettingClash = ({ onError }: Props) => {
       <SettingItem onClick={() => webRef.current?.open()} label={t("Web UI")} />
 
       <SettingItem
-        label={t("Clash Core")}
+        label={t("classes Core")}
         extra={
           <TooltipIcon
             icon={SettingsRounded}
@@ -284,4 +284,4 @@ const SettingClash = ({ onError }: Props) => {
   );
 };
 
-export default SettingClash;
+export default Settingclasses;

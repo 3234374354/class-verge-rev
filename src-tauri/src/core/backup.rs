@@ -207,8 +207,8 @@ pub fn create_backup() -> Result<(String, PathBuf), Error> {
             }
         }
     }
-    zip.start_file(dirs::CLASH_CONFIG, options)?;
-    zip.write_all(fs::read(dirs::clash_path()?)?.as_slice())?;
+    zip.start_file(dirs::classes_CONFIG, options)?;
+    zip.write_all(fs::read(dirs::classes_path()?)?.as_slice())?;
 
     let mut verge_config: serde_json::Value =
         serde_yaml::from_str(&fs::read_to_string(dirs::verge_path()?)?)?;

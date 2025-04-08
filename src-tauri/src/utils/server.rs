@@ -25,7 +25,7 @@ pub async fn check_singleton() -> Result<()> {
             #[cfg(not(target_os = "macos"))]
             {
                 let param = argvs[1].as_str();
-                if param.starts_with("clash:") {
+                if param.starts_with("classes:") {
                     let _ = reqwest::get(format!(
                         "http://127.0.0.1:{port}/commands/scheme?param={param}"
                     ))
@@ -62,7 +62,7 @@ pub fn embed_server() {
             let port = Config::verge()
                 .latest()
                 .verge_mixed_port
-                .unwrap_or(Config::clash().data().get_mixed_port());
+                .unwrap_or(Config::classes().data().get_mixed_port());
             let content = content.replace("%mixed-port%", &format!("{}", port));
             warp::http::Response::builder()
                 .header("Content-Type", "application/x-ns-proxy-autoconfig")

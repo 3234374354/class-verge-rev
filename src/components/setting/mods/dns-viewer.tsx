@@ -16,7 +16,7 @@ import {
   Typography,
 } from "@mui/material";
 import { RestartAltRounded } from "@mui/icons-material";
-import { useClash } from "@/hooks/use-clash";
+import { useclasses } from "@/hooks/use-classes";
 import { BaseDialog, DialogRef, Notice } from "@/components/base";
 import yaml from "js-yaml";
 import MonacoEditor from "react-monaco-editor";
@@ -82,7 +82,7 @@ const DEFAULT_DNS_CONFIG = {
 
 export const DnsViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
-  const { clash, mutateClash, patchClash } = useClash();
+  const { classes, mutateclasses, patchclasses } = useclasses();
   const themeMode = useThemeMode();
 
   const [open, setOpen] = useState(false);
@@ -509,13 +509,13 @@ export const DnsViewer = forwardRef<DialogRef>((props, ref) => {
         dnsConfig = parsedConfig;
       }
 
-      // 不直接应用到clash配置，而是保存到单独文件
+      // 不直接应用到classes配置，而是保存到单独文件
       await invoke("save_dns_config", { dnsConfig });
 
       // 如果DNS开关当前是打开的，则需要应用新的DNS配置
-      if (clash?.dns?.enable) {
+      if (classes?.dns?.enable) {
         await invoke("apply_dns_config", { apply: true });
-        mutateClash(); // 刷新UI
+        mutateclasses(); // 刷新UI
       }
 
       setOpen(false);

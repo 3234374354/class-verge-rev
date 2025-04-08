@@ -160,17 +160,17 @@ pub fn run() {
             cmd::uninstall_service,
             cmd::reinstall_service,
             cmd::repair_service,
-            // clash
-            cmd::get_clash_info,
-            cmd::patch_clash_config,
-            cmd::patch_clash_mode,
-            cmd::change_clash_core,
+            // classes
+            cmd::get_classes_info,
+            cmd::patch_classes_config,
+            cmd::patch_classes_mode,
+            cmd::change_classes_core,
             cmd::get_runtime_config,
             cmd::get_runtime_yaml,
             cmd::get_runtime_exists,
             cmd::get_runtime_logs,
             cmd::invoke_uwp_tool,
-            cmd::copy_clash_env,
+            cmd::copy_classes_env,
             cmd::get_proxies,
             cmd::get_providers_proxies,
             cmd::save_dns_config,
@@ -203,8 +203,8 @@ pub fn run() {
             // script validation
             cmd::script_validate_notice,
             cmd::validate_script_file,
-            // clash api
-            cmd::clash_api_get_proxy_delay,
+            // classes api
+            cmd::classes_api_get_proxy_delay,
             // backup
             cmd::create_webdav_backup,
             cmd::save_webdav_config,
@@ -246,7 +246,7 @@ pub fn run() {
                     .get_handle()
                     .get_webview_window("main")
                 {
-                    let _ = window.set_title("Clash Verge");
+                    let _ = window.set_title("classes Verge");
                 }
             }
         }

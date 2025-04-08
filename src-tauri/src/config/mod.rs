@@ -1,4 +1,4 @@
-mod clash;
+mod classes;
 #[allow(clippy::module_inception)]
 mod config;
 mod draft;
@@ -9,7 +9,7 @@ mod runtime;
 mod verge;
 
 pub use self::{
-    clash::*, config::*, draft::*, encrypt::*, prfitem::*, profiles::*, runtime::*, verge::*,
+    classes::*, config::*, draft::*, encrypt::*, prfitem::*, profiles::*, runtime::*, verge::*,
 };
 
 pub const DEFAULT_PAC: &str = r#"function FindProxyForURL(url, host) {

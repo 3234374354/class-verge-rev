@@ -1,8 +1,8 @@
 import { invoke } from "@tauri-apps/api/core";
 import { Notice } from "@/components/base";
 
-export async function copyClashEnv() {
-  return invoke<void>("copy_clash_env");
+export async function copyclassesEnv() {
+  return invoke<void>("copy_classes_env");
 }
 
 export async function getProfiles() {
@@ -65,8 +65,8 @@ export async function patchProfile(
   return invoke<void>("patch_profile", { index, profile });
 }
 
-export async function getClashInfo() {
-  return invoke<IClashInfo | null>("get_clash_info");
+export async function getclassesInfo() {
+  return invoke<IclassesInfo | null>("get_classes_info");
 }
 
 // Get runtime config which controlled by verge
@@ -86,12 +86,12 @@ export async function getRuntimeLogs() {
   return invoke<Record<string, [string, string][]>>("get_runtime_logs");
 }
 
-export async function patchClashConfig(payload: Partial<IConfigData>) {
-  return invoke<void>("patch_clash_config", { payload });
+export async function patchclassesConfig(payload: Partial<IConfigData>) {
+  return invoke<void>("patch_classes_config", { payload });
 }
 
-export async function patchClashMode(payload: String) {
-  return invoke<void>("patch_clash_mode", { payload });
+export async function patchclassesMode(payload: String) {
+  return invoke<void>("patch_classes_mode", { payload });
 }
 
 export async function getVergeConfig() {
@@ -127,8 +127,8 @@ export async function getAutoLaunchStatus() {
   }
 }
 
-export async function changeClashCore(clashCore: string) {
-  return invoke<string | null>("change_clash_core", { clashCore });
+export async function changeclassesCore(classesCore: string) {
+  return invoke<string | null>("change_classes_core", { classesCore });
 }
 
 export async function restartCore() {
@@ -179,7 +179,7 @@ export async function cmdGetProxyDelay(
   try {
     name = encodeURIComponent(name);
     const result = await invoke<{ delay: number }>(
-      "clash_api_get_proxy_delay",
+      "classes_api_get_proxy_delay",
       {
         name,
         url: testUrl, // 传递经过验证的URL

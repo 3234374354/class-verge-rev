@@ -104,10 +104,10 @@ impl MihomoManager {
         Ok(())
     }
 
-    pub async fn put_configs_force(&self, clash_config_path: &str) -> Result<(), String> {
+    pub async fn put_configs_force(&self, classes_config_path: &str) -> Result<(), String> {
         let url = format!("{}/configs?force=true", self.mihomo_server);
         let payload = serde_json::json!({
-            "path": clash_config_path,
+            "path": classes_config_path,
         });
         let _response = self.send_request(Method::PUT, url, Some(payload)).await?;
         Ok(())

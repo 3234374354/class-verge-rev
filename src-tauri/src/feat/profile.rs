@@ -70,7 +70,7 @@ pub async fn update_profile(uid: String, option: Option<PrfOption>) -> Result<()
         match CoreManager::global().update_config().await {
             Ok(_) => {
                 println!("[订阅更新] 更新成功");
-                handle::Handle::refresh_clash();
+                handle::Handle::refresh_classes();
             }
             Err(err) => {
                 println!("[订阅更新] 更新失败: {}", err);

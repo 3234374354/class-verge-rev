@@ -10,10 +10,10 @@ interface ProxyGroup {
 // 获取当前代理节点信息的自定义Hook
 export const useCurrentProxy = () => {
   // 从AppDataProvider获取数据
-  const { proxies, clashConfig, refreshProxy } = useAppData();
+  const { proxies, classesConfig, refreshProxy } = useAppData();
 
   // 获取当前模式
-  const currentMode = clashConfig?.mode?.toLowerCase() || "rule";
+  const currentMode = classesConfig?.mode?.toLowerCase() || "rule";
 
   // 获取当前代理节点信息
   const currentProxyInfo = useMemo(() => {

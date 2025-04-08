@@ -33,7 +33,7 @@ export const ConfigViewer = forwardRef<DialogRef>((_, ref) => {
       initialData={Promise.resolve(runtimeConfig)}
       readOnly
       language="yaml"
-      schema="clash"
+      schema="classes"
       onClose={() => setOpen(false)}
     />
   );

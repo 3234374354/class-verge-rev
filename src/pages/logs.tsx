@@ -9,7 +9,7 @@ import {
   PauseCircleOutlineRounded,
 } from "@mui/icons-material";
 import { LogLevel, clearLogs } from "@/hooks/use-log-data";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { useEnableLog } from "@/services/states";
 import { BaseEmpty, BasePage } from "@/components/base";
 import LogItem from "@/components/log/log-item";
@@ -27,7 +27,7 @@ import {
 const LogPage = () => {
   const { t } = useTranslation();
   const [enableLog, setEnableLog] = useEnableLog();
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const theme = useTheme();
   const isDark = theme.palette.mode === "dark";
   const [logLevel, setLogLevel] = useLocalStorage<LogLevel>(
@@ -54,15 +54,15 @@ const LogPage = () => {
 
   const handleLogLevelChange = (newLevel: LogLevel) => {
     setLogLevel(newLevel);
-    if (clashInfo) {
-      const { server = "", secret = "" } = clashInfo;
+    if (classesInfo) {
+      const { server = "", secret = "" } = classesInfo;
       changeLogLevel(newLevel, server, secret);
     }
   };
 
   const handleToggleLog = () => {
-    if (clashInfo) {
-      const { server = "", secret = "" } = clashInfo;
+    if (classesInfo) {
+      const { server = "", secret = "" } = classesInfo;
       toggleLogEnabled(server, secret);
       setEnableLog(!enableLog);
     }

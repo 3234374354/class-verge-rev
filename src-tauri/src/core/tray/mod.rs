@@ -234,7 +234,7 @@ impl Tray {
         let system_proxy = verge.enable_system_proxy.as_ref().unwrap_or(&false);
         let tun_mode = verge.enable_tun_mode.as_ref().unwrap_or(&false);
         let mode = {
-            Config::clash()
+            Config::classes()
                 .latest()
                 .0
                 .get("mode")
@@ -351,7 +351,7 @@ impl Tray {
 
         let tray = app_handle.tray_by_id("main").unwrap();
         let _ = tray.set_tooltip(Some(&format!(
-            "Clash Verge {version}\n{}: {}\n{}: {}\n{}: {}",
+            "classes Verge {version}\n{}: {}\n{}: {}\n{}: {}",
             t("SysProxy"),
             switch_map[system_proxy],
             t("TUN"),
@@ -501,7 +501,7 @@ fn create_tray_menu(
         t("Rule Mode"),
         true,
         mode == "rule",
-        hotkeys.get("clash_mode_rule").map(|s| s.as_str()),
+        hotkeys.get("classes_mode_rule").map(|s| s.as_str()),
     )
     .unwrap();
 
@@ -511,7 +511,7 @@ fn create_tray_menu(
         t("Global Mode"),
         true,
         mode == "global",
-        hotkeys.get("clash_mode_global").map(|s| s.as_str()),
+        hotkeys.get("classes_mode_global").map(|s| s.as_str()),
     )
     .unwrap();
 
@@ -521,7 +521,7 @@ fn create_tray_menu(
         t("Direct Mode"),
         true,
         mode == "direct",
-        hotkeys.get("clash_mode_direct").map(|s| s.as_str()),
+        hotkeys.get("classes_mode_direct").map(|s| s.as_str()),
     )
     .unwrap();
 
@@ -602,10 +602,10 @@ fn create_tray_menu(
     )
     .unwrap();
 
-    let restart_clash = &MenuItem::with_id(
+    let restart_classes = &MenuItem::with_id(
         app_handle,
-        "restart_clash",
-        t("Restart Clash Core"),
+        "restart_classes",
+        t("Restart classes Core"),
         true,
         None::<&str>,
     )
@@ -634,7 +634,7 @@ fn create_tray_menu(
         "more",
         t("More"),
         true,
-        &[restart_clash, restart_app, app_version],
+        &[restart_classes, restart_app, app_version],
     )
     .unwrap();
 
@@ -673,16 +673,16 @@ fn on_menu_event(_: &AppHandle, event: MenuEvent) {
         mode @ ("rule_mode" | "global_mode" | "direct_mode") => {
             let mode = &mode[0..mode.len() - 5];
             println!("change mode to: {}", mode);
-            feat::change_clash_mode(mode.into());
+            feat::change_classes_mode(mode.into());
         }
         "open_window" => resolve::create_window(true),
         "system_proxy" => feat::toggle_system_proxy(),
         "tun_mode" => feat::toggle_tun_mode(None),
-        "copy_env" => feat::copy_clash_env(),
+        "copy_env" => feat::copy_classes_env(),
         "open_app_dir" => crate::logging_error!(Type::Cmd, true, cmd::open_app_dir()),
         "open_core_dir" => crate::logging_error!(Type::Cmd, true, cmd::open_core_dir()),
         "open_logs_dir" => crate::logging_error!(Type::Cmd, true, cmd::open_logs_dir()),
-        "restart_clash" => feat::restart_clash_core(),
+        "restart_classes" => feat::restart_classes_core(),
         "restart_app" => feat::restart_app(),
         "entry_lightweight_mode" => entry_lightweight_mode(),
         "quit" => {

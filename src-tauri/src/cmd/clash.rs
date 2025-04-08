@@ -2,45 +2,45 @@ use super::CmdResult;
 use crate::{config::*, core::*, feat, module::mihomo::MihomoManager, wrap_err};
 use serde_yaml::Mapping;
 
-/// 复制Clash环境变量
+/// 复制classes环境变量
 #[tauri::command]
-pub fn copy_clash_env() -> CmdResult {
-    feat::copy_clash_env();
+pub fn copy_classes_env() -> CmdResult {
+    feat::copy_classes_env();
     Ok(())
 }
 
-/// 获取Clash信息
+/// 获取classes信息
 #[tauri::command]
-pub fn get_clash_info() -> CmdResult<ClashInfo> {
-    Ok(Config::clash().latest().get_client_info())
+pub fn get_classes_info() -> CmdResult<classesInfo> {
+    Ok(Config::classes().latest().get_client_info())
 }
 
-/// 修改Clash配置
+/// 修改classes配置
 #[tauri::command]
-pub async fn patch_clash_config(payload: Mapping) -> CmdResult {
-    wrap_err!(feat::patch_clash(payload).await)
+pub async fn patch_classes_config(payload: Mapping) -> CmdResult {
+    wrap_err!(feat::patch_classes(payload).await)
 }
 
-/// 修改Clash模式
+/// 修改classes模式
 #[tauri::command]
-pub async fn patch_clash_mode(payload: String) -> CmdResult {
-    feat::change_clash_mode(payload);
+pub async fn patch_classes_mode(payload: String) -> CmdResult {
+    feat::change_classes_mode(payload);
     Ok(())
 }
 
-/// 切换Clash核心
+/// 切换classes核心
 #[tauri::command]
-pub async fn change_clash_core(clash_core: String) -> CmdResult<Option<String>> {
-    log::info!(target: "app", "changing core to {clash_core}");
+pub async fn change_classes_core(classes_core: String) -> CmdResult<Option<String>> {
+    log::info!(target: "app", "changing core to {classes_core}");
 
     match CoreManager::global()
-        .change_core(Some(clash_core.clone()))
+        .change_core(Some(classes_core.clone()))
         .await
     {
         Ok(_) => {
-            log::info!(target: "app", "core changed to {clash_core}");
-            handle::Handle::notice_message("config_core::change_success", &clash_core);
-            handle::Handle::refresh_clash();
+            log::info!(target: "app", "core changed to {classes_core}");
+            handle::Handle::notice_message("config_core::change_success", &classes_core);
+            handle::Handle::refresh_classes();
             Ok(None)
         }
         Err(err) => {
@@ -60,7 +60,7 @@ pub async fn restart_core() -> CmdResult {
 
 /// 获取代理延迟
 #[tauri::command]
-pub async fn clash_api_get_proxy_delay(
+pub async fn classes_api_get_proxy_delay(
     name: String,
     url: Option<String>,
     timeout: i32,
@@ -147,7 +147,7 @@ pub fn apply_dns_config(apply: bool) -> CmdResult {
             log::info!(target: "app", "Applying DNS config from file");
 
             // 重新生成配置，确保DNS配置被正确应用
-            // 这里不调用patch_clash以避免将DNS配置写入config.yaml
+            // 这里不调用patch_classes以避免将DNS配置写入config.yaml
             Config::runtime()
                 .latest()
                 .patch_config(patch_config.clone());
@@ -163,7 +163,7 @@ pub fn apply_dns_config(apply: bool) -> CmdResult {
                 log::error!(target: "app", "Failed to apply config with DNS: {}", err);
             } else {
                 log::info!(target: "app", "DNS config successfully applied");
-                handle::Handle::refresh_clash();
+                handle::Handle::refresh_classes();
             }
         } else {
             // 当关闭DNS设置时，不需要对配置进行任何修改
@@ -180,7 +180,7 @@ pub fn apply_dns_config(apply: bool) -> CmdResult {
             match CoreManager::global().update_config().await {
                 Ok(_) => {
                     log::info!(target: "app", "Config regenerated successfully");
-                    handle::Handle::refresh_clash();
+                    handle::Handle::refresh_classes();
                 }
                 Err(err) => {
                     log::error!(target: "app", "Failed to apply regenerated config: {}", err);

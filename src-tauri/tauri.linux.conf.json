@@ -1,30 +1,30 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
-  "identifier": "io.github.clash-verge-rev.clash-verge-rev",
+  "identifier": "io.github.classes-verge-rev.classes-verge-rev",
   "bundle": {
     "targets": ["deb", "rpm"],
     "linux": {
       "deb": {
         "depends": ["openssl"],
-        "desktopTemplate": "./packages/linux/clash-verge.desktop",
-        "provides": ["clash-verge"],
-        "conflicts": ["clash-verge"],
-        "replaces": ["clash-verge"],
+        "desktopTemplate": "./packages/linux/classes-verge.desktop",
+        "provides": ["classes-verge"],
+        "conflicts": ["classes-verge"],
+        "replaces": ["classes-verge"],
         "postInstallScript": "./packages/linux/post-install.sh",
         "preRemoveScript": "./packages/linux/pre-remove.sh"
       },
       "rpm": {
         "depends": ["openssl"],
-        "desktopTemplate": "./packages/linux/clash-verge.desktop",
-        "provides": ["clash-verge"],
-        "conflicts": ["clash-verge"],
-        "obsoletes": ["clash-verge"],
+        "desktopTemplate": "./packages/linux/classes-verge.desktop",
+        "provides": ["classes-verge"],
+        "conflicts": ["classes-verge"],
+        "obsoletes": ["classes-verge"],
         "postInstallScript": "./packages/linux/post-install.sh",
         "preRemoveScript": "./packages/linux/pre-remove.sh"
       }
     },
     "externalBin": [
-      "./resources/clash-verge-service",
+      "./resources/classes-verge-service",
       "./resources/install-service",
       "./resources/uninstall-service",
       "./sidecar/verge-mihomo",

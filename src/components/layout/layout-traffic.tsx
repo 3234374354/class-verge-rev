@@ -5,7 +5,7 @@ import {
   ArrowUpwardRounded,
   MemoryRounded,
 } from "@mui/icons-material";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { useVerge } from "@/hooks/use-verge";
 import { TrafficGraph, type TrafficRef } from "./traffic-graph";
 import { useVisibility } from "@/hooks/use-visibility";
@@ -23,7 +23,7 @@ interface MemoryUsage {
 // setup the traffic
 export const LayoutTraffic = () => {
   const { t } = useTranslation();
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const { verge } = useVerge();
 
   // whether hide traffic graph
@@ -43,9 +43,9 @@ export const LayoutTraffic = () => {
     any,
     "getRealtimeTraffic" | null
   >(
-    clashInfo && pageVisible ? "getRealtimeTraffic" : null,
+    classesInfo && pageVisible ? "getRealtimeTraffic" : null,
     (_key, { next }) => {
-      const { server = "", secret = "" } = clashInfo!;
+      const { server = "", secret = "" } = classesInfo!;
 
       if (!server) {
         console.warn("[Traffic] 服务器地址为空，无法建立连接");
@@ -99,9 +99,9 @@ export const LayoutTraffic = () => {
     any,
     "getRealtimeMemory" | null
   >(
-    clashInfo && pageVisible && displayMemory ? "getRealtimeMemory" : null,
+    classesInfo && pageVisible && displayMemory ? "getRealtimeMemory" : null,
     (_key, { next }) => {
-      const { server = "", secret = "" } = clashInfo!;
+      const { server = "", secret = "" } = classesInfo!;
 
       if (!server) {
         console.warn("[Memory] 服务器地址为空，无法建立连接");

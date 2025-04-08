@@ -8,9 +8,9 @@ use crate::{
 use anyhow::Result;
 use serde_yaml::Mapping;
 
-/// Patch Clash configuration
-pub async fn patch_clash(patch: Mapping) -> Result<()> {
-    Config::clash().draft().patch_config(patch.clone());
+/// Patch classes configuration
+pub async fn patch_classes(patch: Mapping) -> Result<()> {
+    Config::classes().draft().patch_config(patch.clone());
 
     let res = {
         // 激活订阅
@@ -25,17 +25,17 @@ pub async fn patch_clash(patch: Mapping) -> Result<()> {
             Config::runtime().latest().patch_config(patch);
             CoreManager::global().update_config().await?;
         }
-        handle::Handle::refresh_clash();
+        handle::Handle::refresh_classes();
         <Result<()>>::Ok(())
     };
     match res {
         Ok(()) => {
-            Config::clash().apply();
-            Config::clash().data().save_config()?;
+            Config::classes().apply();
+            Config::classes().data().save_config()?;
             Ok(())
         }
         Err(err) => {
-            Config::clash().discard();
+            Config::classes().discard();
             Err(err)
         }
     }
@@ -46,7 +46,7 @@ pub async fn patch_clash(patch: Mapping) -> Result<()> {
 enum UpdateFlags {
     None = 0,
     RestartCore = 1 << 0,
-    ClashConfig = 1 << 1,
+    classesConfig = 1 << 1,
     VergeConfig = 1 << 2,
     Launch = 1 << 3,
     SysProxy = 1 << 4,
@@ -100,7 +100,7 @@ pub async fn patch_verge(patch: IVerge, not_save_file: bool) -> Result<()> {
         let mut update_flags: i32 = UpdateFlags::None as i32;
 
         if tun_mode.is_some() {
-            update_flags |= UpdateFlags::ClashConfig as i32;
+            update_flags |= UpdateFlags::classesConfig as i32;
             update_flags |= UpdateFlags::SystrayMenu as i32;
             update_flags |= UpdateFlags::SystrayTooltip as i32;
             update_flags |= UpdateFlags::SystrayIcon as i32;
@@ -170,9 +170,9 @@ pub async fn patch_verge(patch: IVerge, not_save_file: bool) -> Result<()> {
             Config::generate().await?;
             CoreManager::global().restart_core().await?;
         }
-        if (update_flags & (UpdateFlags::ClashConfig as i32)) != 0 {
+        if (update_flags & (UpdateFlags::classesConfig as i32)) != 0 {
             CoreManager::global().update_config().await?;
-            handle::Handle::refresh_clash();
+            handle::Handle::refresh_classes();
         }
         if (update_flags & (UpdateFlags::VergeConfig as i32)) != 0 {
             Config::verge().draft().enable_global_hotkey = enable_global_hotkey;

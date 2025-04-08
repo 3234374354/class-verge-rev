@@ -18,7 +18,7 @@ pub fn get_profiles() -> CmdResult<IProfiles> {
 #[tauri::command]
 pub async fn enhance_profiles() -> CmdResult {
     wrap_err!(feat::enhance_profiles().await)?;
-    handle::Handle::refresh_clash();
+    handle::Handle::refresh_classes();
     Ok(())
 }
 
@@ -54,7 +54,7 @@ pub async fn delete_profile(index: String) -> CmdResult {
     let should_update = wrap_err!({ Config::profiles().data().delete_item(index) })?;
     if should_update {
         wrap_err!(CoreManager::global().update_config().await)?;
-        handle::Handle::refresh_clash();
+        handle::Handle::refresh_classes();
     }
     Ok(())
 }
@@ -151,7 +151,7 @@ pub async fn patch_profiles_config(profiles: IProfiles) -> CmdResult<bool> {
     match CoreManager::global().update_config().await {
         Ok((true, _)) => {
             logging!(info, Type::Cmd, true, "配置更新成功");
-            handle::Handle::refresh_clash();
+            handle::Handle::refresh_classes();
             let _ = Tray::global().update_tooltip();
             Config::profiles().apply();
             wrap_err!(Config::profiles().data().save_file())?;

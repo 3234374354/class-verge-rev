@@ -212,7 +212,7 @@ export const ProfileItem = (props: Props) => {
     } catch (err: any) {
       // 更新失败，尝试使用自身代理
       const errmsg = err?.message || err.toString();
-      Notice.info(t("Update failed, retrying with Clash proxy..."));
+      Notice.info(t("Update failed, retrying with classes proxy..."));
       
       try {
         await updateProfile(itemData.uid, {
@@ -220,14 +220,14 @@ export const ProfileItem = (props: Props) => {
           self_proxy: true
         });
         
-        Notice.success(t("Update with Clash proxy successfully"));
+        Notice.success(t("Update with classes proxy successfully"));
         
         await updateProfile(itemData.uid, originalOptions);
         mutate("getProfiles");
       } catch (retryErr: any) {
         const retryErrmsg = retryErr?.message || retryErr.toString();
         Notice.error(
-          `${t("Update failed even with Clash proxy")}: ${retryErrmsg.replace(/error sending request for url (\S+?): /, "")}`,
+          `${t("Update failed even with classes proxy")}: ${retryErrmsg.replace(/error sending request for url (\S+?): /, "")}`,
         );
       }
     } finally {
@@ -510,7 +510,7 @@ export const ProfileItem = (props: Props) => {
           open={true}
           initialData={readProfileFile(uid)}
           language="yaml"
-          schema="clash"
+          schema="classes"
           onSave={async (prev, curr) => {
             await saveProfileFile(uid, curr ?? "");
             onSave && onSave(prev, curr);
@@ -556,7 +556,7 @@ export const ProfileItem = (props: Props) => {
           open={true}
           initialData={readProfileFile(option?.merge ?? "")}
           language="yaml"
-          schema="clash"
+          schema="classes"
           onSave={async (prev, curr) => {
             await saveProfileFile(option?.merge ?? "", curr ?? "");
             onSave && onSave(prev, curr);

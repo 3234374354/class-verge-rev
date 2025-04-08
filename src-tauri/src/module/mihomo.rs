@@ -26,7 +26,7 @@ impl MihomoManager {
 
     pub fn global() -> mihomo_api::MihomoManager {
         let instance = MihomoManager::__global();
-        let (current_server, headers) = MihomoManager::get_clash_client_info().unwrap();
+        let (current_server, headers) = MihomoManager::get_classes_client_info().unwrap();
 
         let lock = instance.mihomo.lock().unwrap();
         if let Some(mihomo) = lock.get() {
@@ -42,8 +42,8 @@ impl MihomoManager {
 }
 
 impl MihomoManager {
-    pub fn get_clash_client_info() -> Option<(String, HeaderMap)> {
-        let client = { Config::clash().data().get_client_info() };
+    pub fn get_classes_client_info() -> Option<(String, HeaderMap)> {
+        let client = { Config::classes().data().get_client_info() };
         let server = format!("http://{}", client.server);
         let mut headers = HeaderMap::new();
         headers.insert("Content-Type", "application/json".parse().unwrap());
@@ -56,7 +56,7 @@ impl MihomoManager {
     }
     #[cfg(target_os = "macos")]
     pub fn get_traffic_ws_url() -> (String, HeaderValue) {
-        let (url, headers) = MihomoManager::get_clash_client_info().unwrap();
+        let (url, headers) = MihomoManager::get_classes_client_info().unwrap();
         let ws_url = url.replace("http://", "ws://") + "/traffic";
         let auth = headers
             .get("Authorization")

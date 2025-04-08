@@ -17,7 +17,7 @@ import {
   ListItemButton,
   ListItemText,
 } from "@mui/material";
-import { changeClashCore, restartCore } from "@/services/cmds";
+import { changeclassesCore, restartCore } from "@/services/cmds";
 import { closeAllConnections, upgradeCore } from "@/services/api";
 
 const VALID_CORE = [
@@ -25,7 +25,7 @@ const VALID_CORE = [
   { name: "Mihomo Alpha", core: "verge-mihomo-alpha", chip: "Alpha Version" },
 ];
 
-export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
+export const classesCoreViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
 
   const { verge, mutateVerge } = useVerge();
@@ -38,20 +38,20 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
     close: () => setOpen(false),
   }));
 
-  const { clash_core = "verge-mihomo" } = verge ?? {};
+  const { classes_core = "verge-mihomo" } = verge ?? {};
 
   const onCoreChange = useLockFn(async (core: string) => {
-    if (core === clash_core) return;
+    if (core === classes_core) return;
 
     try {
       closeAllConnections();
-      await changeClashCore(core);
+      await changeclassesCore(core);
       mutateVerge();
       setTimeout(() => {
-        mutate("getClashConfig");
+        mutate("getclassesConfig");
         mutate("getVersion");
       }, 100);
-      // Notice.success(t("Switched to _clash Core", { core: `${core}` }), 1000);
+      // Notice.success(t("Switched to _classes Core", { core: `${core}` }), 1000);
     } catch (err: any) {
       Notice.error(err?.message || err.toString());
     }
@@ -60,7 +60,7 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
   const onRestart = useLockFn(async () => {
     try {
       await restartCore();
-      Notice.success(t(`Clash Core Restarted`), 1000);
+      Notice.success(t(`classes Core Restarted`), 1000);
     } catch (err: any) {
       Notice.error(err?.message || err.toString());
     }
@@ -83,7 +83,7 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
       open={open}
       title={
         <Box display="flex" justifyContent="space-between">
-          {t("Clash Core")}
+          {t("classes Core")}
           <Box>
             <LoadingButton
               variant="contained"
@@ -124,7 +124,7 @@ export const ClashCoreViewer = forwardRef<DialogRef>((props, ref) => {
         {VALID_CORE.map((each) => (
           <ListItemButton
             key={each.core}
-            selected={each.core === clash_core}
+            selected={each.core === classes_core}
             onClick={() => onCoreChange(each.core)}
           >
             <ListItemText primary={each.name} secondary={`/${each.core}`} />

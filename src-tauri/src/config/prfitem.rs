@@ -252,7 +252,7 @@ impl PrfItem {
             let port = Config::verge()
                 .latest()
                 .verge_mixed_port
-                .unwrap_or(Config::clash().data().get_mixed_port());
+                .unwrap_or(Config::classes().data().get_mixed_port());
 
             let proxy_scheme = format!("http://127.0.0.1:{port}");
 
@@ -284,8 +284,8 @@ impl PrfItem {
         }
 
         let version = match VERSION.get() {
-            Some(v) => format!("clash-verge/v{}", v),
-            None => "clash-verge/unknown".to_string(),
+            Some(v) => format!("classes-verge/v{}", v),
+            None => "classes-verge/unknown".to_string(),
         };
 
         builder = builder.danger_accept_invalid_certs(accept_invalid_certs);

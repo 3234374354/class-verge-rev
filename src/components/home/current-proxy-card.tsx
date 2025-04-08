@@ -31,8 +31,8 @@ import { useVerge } from "@/hooks/use-verge";
 import { useAppData } from "@/providers/app-data-provider";
 
 // 本地存储的键名
-const STORAGE_KEY_GROUP = "clash-verge-selected-proxy-group";
-const STORAGE_KEY_PROXY = "clash-verge-selected-proxy";
+const STORAGE_KEY_GROUP = "classes-verge-selected-proxy-group";
+const STORAGE_KEY_PROXY = "classes-verge-selected-proxy";
 
 // 代理节点信息接口
 interface ProxyOption {
@@ -90,10 +90,10 @@ export const CurrentProxyCard = () => {
   const navigate = useNavigate();
   const theme = useTheme();
   const { verge } = useVerge();
-  const { proxies, connections, clashConfig, refreshProxy } = useAppData();
+  const { proxies, connections, classesConfig, refreshProxy } = useAppData();
 
   // 判断模式
-  const mode = clashConfig?.mode?.toLowerCase() || "rule";
+  const mode = classesConfig?.mode?.toLowerCase() || "rule";
   const isGlobalMode = mode === "global";
   const isDirectMode = mode === "direct";
   

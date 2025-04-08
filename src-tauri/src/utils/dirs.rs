@@ -5,18 +5,18 @@ use std::{fs, path::PathBuf};
 use tauri::Manager;
 
 #[cfg(not(feature = "verge-dev"))]
-pub static APP_ID: &str = "io.github.clash-verge-rev.clash-verge-rev";
+pub static APP_ID: &str = "io.github.classes-verge-rev.classes-verge-rev";
 #[cfg(not(feature = "verge-dev"))]
-pub static BACKUP_DIR: &str = "clash-verge-rev-backup";
+pub static BACKUP_DIR: &str = "classes-verge-rev-backup";
 
 #[cfg(feature = "verge-dev")]
-pub static APP_ID: &str = "io.github.clash-verge-rev.clash-verge-rev.dev";
+pub static APP_ID: &str = "io.github.classes-verge-rev.classes-verge-rev.dev";
 #[cfg(feature = "verge-dev")]
-pub static BACKUP_DIR: &str = "clash-verge-rev-backup-dev";
+pub static BACKUP_DIR: &str = "classes-verge-rev-backup-dev";
 
 pub static PORTABLE_FLAG: OnceCell<bool> = OnceCell::new();
 
-pub static CLASH_CONFIG: &str = "config.yaml";
+pub static classes_CONFIG: &str = "config.yaml";
 pub static VERGE_CONFIG: &str = "verge.yaml";
 pub static PROFILE_YAML: &str = "profiles.yaml";
 
@@ -112,8 +112,8 @@ pub fn app_logs_dir() -> Result<PathBuf> {
     Ok(app_home_dir()?.join("logs"))
 }
 
-pub fn clash_path() -> Result<PathBuf> {
-    Ok(app_home_dir()?.join(CLASH_CONFIG))
+pub fn classes_path() -> Result<PathBuf> {
+    Ok(app_home_dir()?.join(classes_CONFIG))
 }
 
 pub fn verge_path() -> Result<PathBuf> {
@@ -126,12 +126,12 @@ pub fn profiles_path() -> Result<PathBuf> {
 
 #[cfg(target_os = "macos")]
 pub fn service_path() -> Result<PathBuf> {
-    Ok(app_resources_dir()?.join("clash-verge-service"))
+    Ok(app_resources_dir()?.join("classes-verge-service"))
 }
 
 #[cfg(windows)]
 pub fn service_path() -> Result<PathBuf> {
-    Ok(app_resources_dir()?.join("clash-verge-service.exe"))
+    Ok(app_resources_dir()?.join("classes-verge-service.exe"))
 }
 
 pub fn service_log_file() -> Result<PathBuf> {

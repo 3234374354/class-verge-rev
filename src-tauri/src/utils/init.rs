@@ -238,7 +238,7 @@ fn init_dns_config() -> Result<()> {
         help::save_yaml(
             &dns_path,
             &default_dns_config,
-            Some("# Clash Verge DNS Config"),
+            Some("# classes Verge DNS Config"),
         )?;
     }
 
@@ -264,23 +264,23 @@ pub fn init_config() -> Result<()> {
         }
     }));
 
-    crate::log_err!(dirs::clash_path().map(|path| {
+    crate::log_err!(dirs::classes_path().map(|path| {
         if !path.exists() {
-            help::save_yaml(&path, &IClashTemp::template().0, Some("# Clash Vergeasu"))?;
+            help::save_yaml(&path, &IclassesTemp::template().0, Some("# classes Vergeasu"))?;
         }
         <Result<()>>::Ok(())
     }));
 
     crate::log_err!(dirs::verge_path().map(|path| {
         if !path.exists() {
-            help::save_yaml(&path, &IVerge::template(), Some("# Clash Verge"))?;
+            help::save_yaml(&path, &IVerge::template(), Some("# classes Verge"))?;
         }
         <Result<()>>::Ok(())
     }));
 
     crate::log_err!(dirs::profiles_path().map(|path| {
         if !path.exists() {
-            help::save_yaml(&path, &IProfiles::template(), Some("# Clash Verge"))?;
+            help::save_yaml(&path, &IProfiles::template(), Some("# classes Verge"))?;
         }
         <Result<()>>::Ok(())
     }));
@@ -359,12 +359,12 @@ pub fn init_scheme() -> Result<()> {
     let app_exe = app_exe.to_string_lossy().into_owned();
 
     let hkcu = RegKey::predef(HKEY_CURRENT_USER);
-    let (clash, _) = hkcu.create_subkey("Software\\Classes\\Clash")?;
-    clash.set_value("", &"Clash Verge")?;
-    clash.set_value("URL Protocol", &"Clash Verge URL Scheme Protocol")?;
-    let (default_icon, _) = hkcu.create_subkey("Software\\Classes\\Clash\\DefaultIcon")?;
+    let (classes, _) = hkcu.create_subkey("Software\\Classes\\classes")?;
+    classes.set_value("", &"classes Verge")?;
+    classes.set_value("URL Protocol", &"classes Verge URL Scheme Protocol")?;
+    let (default_icon, _) = hkcu.create_subkey("Software\\Classes\\classes\\DefaultIcon")?;
     default_icon.set_value("", &app_exe)?;
-    let (command, _) = hkcu.create_subkey("Software\\Classes\\Clash\\Shell\\Open\\Command")?;
+    let (command, _) = hkcu.create_subkey("Software\\Classes\\classes\\Shell\\Open\\Command")?;
     command.set_value("", &format!("{app_exe} \"%1\""))?;
 
     Ok(())
@@ -373,12 +373,12 @@ pub fn init_scheme() -> Result<()> {
 pub fn init_scheme() -> Result<()> {
     let output = std::process::Command::new("xdg-mime")
         .arg("default")
-        .arg("clash-verge.desktop")
-        .arg("x-scheme-handler/clash")
+        .arg("classes-verge.desktop")
+        .arg("x-scheme-handler/classes")
         .output()?;
     if !output.status.success() {
         return Err(anyhow::anyhow!(
-            "failed to set clash scheme, {}",
+            "failed to set classes scheme, {}",
             String::from_utf8_lossy(&output.stderr)
         ));
     }

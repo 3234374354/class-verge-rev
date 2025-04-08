@@ -495,7 +495,7 @@ export const ProxyGroups = (props: Props) => {
   }, [updateMaxHeight]);
 
   if (mode === "direct") {
-    return <BaseEmpty text={t("clash_mode_direct")} />;
+    return <BaseEmpty text={t("classes_mode_direct")} />;
   }
 
   return (

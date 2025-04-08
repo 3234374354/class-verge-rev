@@ -3,8 +3,8 @@ import { useEffect } from "react";
 import { useLockFn } from "ahooks";
 import { useTranslation } from "react-i18next";
 import { Box, Button, ButtonGroup } from "@mui/material";
-import { closeAllConnections, getClashConfig } from "@/services/api";
-import { patchClashConfig, patchClashMode } from "@/services/cmds";
+import { closeAllConnections, getclassesConfig } from "@/services/api";
+import { patchclassesConfig, patchclassesMode } from "@/services/cmds";
 import { useVerge } from "@/hooks/use-verge";
 import { BasePage } from "@/components/base";
 import { ProxyGroups } from "@/components/proxy/proxy-groups";
@@ -13,9 +13,9 @@ import { ProviderButton } from "@/components/proxy/provider-button";
 const ProxyPage = () => {
   const { t } = useTranslation();
 
-  const { data: clashConfig, mutate: mutateClash } = useSWR(
-    "getClashConfig",
-    getClashConfig,
+  const { data: classesConfig, mutate: mutateclasses } = useSWR(
+    "getclassesConfig",
+    getclassesConfig,
     {
       revalidateOnFocus: false,
       revalidateIfStale: true,
@@ -28,15 +28,15 @@ const ProxyPage = () => {
 
   const modeList = ["rule", "global", "direct"];
 
-  const curMode = clashConfig?.mode?.toLowerCase();
+  const curMode = classesConfig?.mode?.toLowerCase();
 
   const onChangeMode = useLockFn(async (mode: string) => {
     // 断开连接
     if (mode !== curMode && verge?.auto_close_connection) {
       closeAllConnections();
     }
-    await patchClashMode(mode);
-    mutateClash();
+    await patchclassesMode(mode);
+    mutateclasses();
   });
 
   useEffect(() => {

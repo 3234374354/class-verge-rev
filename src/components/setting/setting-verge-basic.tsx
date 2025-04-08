@@ -2,7 +2,7 @@ import { useCallback, useRef } from "react";
 import { useTranslation } from "react-i18next";
 import { open } from "@tauri-apps/plugin-dialog";
 import { Button, MenuItem, Select, Input } from "@mui/material";
-import { copyClashEnv } from "@/services/cmds";
+import { copyclassesEnv } from "@/services/cmds";
 import { useVerge } from "@/hooks/use-verge";
 import { DialogRef, Notice } from "@/components/base";
 import { SettingList, SettingItem } from "./mods/setting-comp";
@@ -64,8 +64,8 @@ const SettingVergeBasic = ({ onError }: Props) => {
     mutateVerge({ ...verge, ...patch }, false);
   };
 
-  const onCopyClashEnv = useCallback(async () => {
-    await copyClashEnv();
+  const onCopyclassesEnv = useCallback(async () => {
+    await copyclassesEnv();
     Notice.success(t("Copy Success"), 1000);
   }, []);
 
@@ -131,7 +131,7 @@ const SettingVergeBasic = ({ onError }: Props) => {
       <SettingItem
         label={t("Copy Env Type")}
         extra={
-          <TooltipIcon icon={ContentCopyRounded} onClick={onCopyClashEnv} />
+          <TooltipIcon icon={ContentCopyRounded} onClick={onCopyclassesEnv} />
         }
       >
         <GuardState

@@ -134,7 +134,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
               }
             } catch (err) {
               // 首次创建/更新失败，尝试使用自身代理
-              Notice.info(t("Profile creation failed, retrying with Clash proxy..."));
+              Notice.info(t("Profile creation failed, retrying with classes proxy..."));
               
               // 使用自身代理的配置
               const retryItem = {
@@ -157,7 +157,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
                 await patchProfile(form.uid, { option: originalOptions });
               }
               
-              Notice.success(t("Profile creation succeeded with Clash proxy"));
+              Notice.success(t("Profile creation succeeded with classes proxy"));
             }
           }
           
@@ -257,7 +257,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
                 <TextField
                   {...text}
                   {...field}
-                  placeholder={`clash-verge/v${version}`}
+                  placeholder={`classes-verge/v${version}`}
                   label="User Agent"
                 />
               )}
@@ -312,7 +312,7 @@ export const ProfileViewer = forwardRef<ProfileViewerRef, Props>(
               control={control}
               render={({ field }) => (
                 <StyledBox>
-                  <InputLabel>{t("Use Clash Proxy")}</InputLabel>
+                  <InputLabel>{t("Use classes Proxy")}</InputLabel>
                   <Switch checked={field.value} {...field} color="primary" />
                 </StyledBox>
               )}

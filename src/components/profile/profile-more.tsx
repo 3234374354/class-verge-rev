@@ -173,7 +173,7 @@ export const ProfileMore = (props: Props) => {
           title={`${t("Global " + id)}`}
           initialData={readProfileFile(id)}
           language={id === "Merge" ? "yaml" : "javascript"}
-          schema={id === "Merge" ? "clash" : undefined}
+          schema={id === "Merge" ? "classes" : undefined}
           onSave={async (prev, curr) => {
             await saveProfileFile(id, curr ?? "");
             onSave && onSave(prev, curr);

@@ -5,13 +5,13 @@ import { Button, Box, Typography } from "@mui/material";
 import { useVerge } from "@/hooks/use-verge";
 import { openWebUrl } from "@/services/cmds";
 import { BaseDialog, BaseEmpty, DialogRef, Notice } from "@/components/base";
-import { useClashInfo } from "@/hooks/use-clash";
+import { useclassesInfo } from "@/hooks/use-classes";
 import { WebUIItem } from "./web-ui-item";
 
 export const WebUIViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
 
-  const { clashInfo } = useClashInfo();
+  const { classesInfo } = useclassesInfo();
   const { verge, patchVerge, mutateVerge } = useVerge();
 
   const [open, setOpen] = useState(false);
@@ -53,19 +53,19 @@ export const WebUIViewer = forwardRef<DialogRef>((props, ref) => {
       let url = value.trim().replaceAll("%host", "127.0.0.1");
 
       if (url.includes("%port") || url.includes("%secret")) {
-        if (!clashInfo) throw new Error("failed to get clash info");
-        if (!clashInfo.server?.includes(":")) {
-          throw new Error(`failed to parse the server "${clashInfo.server}"`);
+        if (!classesInfo) throw new Error("failed to get classes info");
+        if (!classesInfo.server?.includes(":")) {
+          throw new Error(`failed to parse the server "${classesInfo.server}"`);
         }
 
-        const port = clashInfo.server
-          .slice(clashInfo.server.indexOf(":") + 1)
+        const port = classesInfo.server
+          .slice(classesInfo.server.indexOf(":") + 1)
           .trim();
 
         url = url.replaceAll("%port", port || "9097");
         url = url.replaceAll(
           "%secret",
-          encodeURIComponent(clashInfo.secret || "")
+          encodeURIComponent(classesInfo.secret || "")
         );
       }
 

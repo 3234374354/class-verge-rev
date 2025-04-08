@@ -1,16 +1,16 @@
 [package]
-name = "clash-verge"
+name = "classes-verge"
 version = "2.2.3-alpha"
-description = "clash verge"
+description = "classes verge"
 authors = ["zzzgydi", "wonfen", "MystiPanda"]
 license = "GPL-3.0-only"
-repository = "https://github.com/clash-verge-rev/clash-verge-rev.git"
-default-run = "clash-verge"
+repository = "https://github.com/classes-verge-rev/classes-verge-rev.git"
+default-run = "classes-verge"
 edition = "2021"
 build = "build.rs"
 
 [package.metadata.bundle]
-identifier = "io.github.clash-verge-rev.clash-verge-rev"
+identifier = "io.github.classes-verge-rev.classes-verge-rev"
 
 [build-dependencies]
 tauri-build = { version = "2.1.0", features = [] }
@@ -43,7 +43,7 @@ tokio = { version = "1.44", features = [
 serde = { version = "1.0", features = ["derive"] }
 reqwest = { version = "0.12", features = ["json", "rustls-tls", "cookies"] }
 regex = "1.11.1"
-sysproxy = { git = "https://github.com/clash-verge-rev/sysproxy-rs", rev = "3d748b5" }
+sysproxy = { git = "https://github.com/classes-verge-rev/sysproxy-rs", rev = "3d748b5" }
 image = "0.25.6"
 imageproc = "0.25.0"
 tauri = { version = "2.4.0", features = [

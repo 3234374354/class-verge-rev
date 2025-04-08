@@ -10,7 +10,7 @@ import {
   Button,
   TextField,
 } from "@mui/material";
-import { useClash } from "@/hooks/use-clash";
+import { useclasses } from "@/hooks/use-classes";
 import { BaseDialog, DialogRef, Notice, Switch } from "@/components/base";
 import { StackModeSwitch } from "./stack-mode-switch";
 import { enhanceProfiles } from "@/services/cmds";
@@ -18,7 +18,7 @@ import { enhanceProfiles } from "@/services/cmds";
 export const TunViewer = forwardRef<DialogRef>((props, ref) => {
   const { t } = useTranslation();
 
-  const { clash, mutateClash, patchClash } = useClash();
+  const { classes, mutateclasses, patchclasses } = useclasses();
 
   const [open, setOpen] = useState(false);
   const [values, setValues] = useState({
@@ -35,13 +35,13 @@ export const TunViewer = forwardRef<DialogRef>((props, ref) => {
     open: () => {
       setOpen(true);
       setValues({
-        stack: clash?.tun.stack ?? "gvisor",
-        device: clash?.tun.device ?? "Mihomo",
-        autoRoute: clash?.tun["auto-route"] ?? true,
-        autoDetectInterface: clash?.tun["auto-detect-interface"] ?? true,
-        dnsHijack: clash?.tun["dns-hijack"] ?? ["any:53"],
-        strictRoute: clash?.tun["strict-route"] ?? false,
-        mtu: clash?.tun.mtu ?? 1500,
+        stack: classes?.tun.stack ?? "gvisor",
+        device: classes?.tun.device ?? "Mihomo",
+        autoRoute: classes?.tun["auto-route"] ?? true,
+        autoDetectInterface: classes?.tun["auto-detect-interface"] ?? true,
+        dnsHijack: classes?.tun["dns-hijack"] ?? ["any:53"],
+        strictRoute: classes?.tun["strict-route"] ?? false,
+        mtu: classes?.tun.mtu ?? 1500,
       });
     },
     close: () => setOpen(false),
@@ -58,8 +58,8 @@ export const TunViewer = forwardRef<DialogRef>((props, ref) => {
         "strict-route": values.strictRoute,
         mtu: values.mtu ?? 1500,
       };
-      await patchClash({ tun });
-      await mutateClash(
+      await patchclasses({ tun });
+      await mutateclasses(
         (old) => ({
           ...(old! || {}),
           tun,
@@ -106,8 +106,8 @@ export const TunViewer = forwardRef<DialogRef>((props, ref) => {
                 strictRoute: false,
                 mtu: 1500,
               });
-              await patchClash({ tun });
-              await mutateClash(
+              await patchclasses({ tun });
+              await mutateclasses(
                 (old) => ({
                   ...(old! || {}),
                   tun,

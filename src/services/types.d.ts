@@ -17,7 +17,7 @@ type Platform =
 declare const OS_PLATFORM: Platform;
 
 /**
- * Some interface for clash api
+ * Some interface for classes api
  */
 interface IConfigData {
   port: number;
@@ -169,13 +169,13 @@ interface IConnections {
  * Some interface for command
  */
 
-interface IClashInfo {
+interface IclassesInfo {
   // status: string;
-  mixed_port?: number; // clash mixed port
-  socks_port?: number; // clash socks port
-  redir_port?: number; // clash redir port
-  tproxy_port?: number; // clash tproxy port
-  port?: number; // clash http port
+  mixed_port?: number; // classes mixed port
+  socks_port?: number; // classes socks port
+  redir_port?: number; // classes redir port
+  tproxy_port?: number; // classes tproxy port
+  port?: number; // classes http port
   server?: string; // external-controller
   secret?: string;
 }
@@ -727,7 +727,7 @@ interface IVergeConfig {
   env_type?: "bash" | "cmd" | "powershell" | "fish" | string;
   startup_script?: string;
   start_page?: string;
-  clash_core?: string;
+  classes_core?: string;
   theme_mode?: "light" | "dark" | "system";
   traffic_graph?: boolean;
   enable_memory_usage?: boolean;

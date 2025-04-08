@@ -1,5 +1,5 @@
 import axios, { AxiosInstance } from "axios";
-import { getClashInfo } from "./cmds";
+import { getclassesInfo } from "./cmds";
 import { invoke } from "@tauri-apps/api/core";
 import { useLockFn } from "ahooks";
 
@@ -10,7 +10,7 @@ async function getInstancePromise() {
   let secret = "";
 
   try {
-    const info = await getClashInfo();
+    const info = await getclassesInfo();
 
     if (info?.server) {
       server = info.server;
@@ -51,7 +51,7 @@ export const getVersion = async () => {
 };
 
 /// Get current base configs
-export const getClashConfig = async () => {
+export const getclassesConfig = async () => {
   const instance = await getAxios();
   return instance.get("/configs") as Promise<IConfigData>;
 };
@@ -62,7 +62,7 @@ export const updateGeoData = async () => {
   return instance.post("/configs/geo");
 };
 
-/// Upgrade clash core
+/// Upgrade classes core
 export const upgradeCore = async () => {
   const instance = await getAxios();
   return instance.post("/upgrade");
@@ -321,7 +321,7 @@ export const gc = async () => {
 
 // Get current IP and geolocation information
 export const getIpInfo = async () => {
-  // 使用axios直接请求IP.sb的API，不通过clash代理
+  // 使用axios直接请求IP.sb的API，不通过classes代理
   const response = await axios.get("https://api.ip.sb/geoip");
   return response.data as {
     ip: string;

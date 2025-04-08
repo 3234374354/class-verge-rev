@@ -1041,7 +1041,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "clash-verge"
+name = "classes-verge"
 version = "2.2.3-alpha"
 dependencies = [
  "ab_glyph",
@@ -6685,7 +6685,7 @@ dependencies = [
 [[package]]
 name = "sysproxy"
 version = "0.3.0"
-source = "git+https://github.com/clash-verge-rev/sysproxy-rs?rev=3d748b5#3d748b5743fcd954ced7a7fb45707bb1114494f2"
+source = "git+https://github.com/classes-verge-rev/sysproxy-rs?rev=3d748b5#3d748b5743fcd954ced7a7fb45707bb1114494f2"
 dependencies = [
  "interfaces",
  "iptools",
