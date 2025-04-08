@@ -175,6 +175,9 @@ async function main(versionArg) {
     await updateCargoVersion(newVersion);
     await updateTauriConfigVersion(newVersion);
     console.log("[SUCCESS]: All version updates completed successfully!");
+
+    const zipFileName = `classes_${newVersion}.zip`;
+    console.log(`[INFO]: Zip file name will be: ${zipFileName}`);
   } catch (error) {
     console.error("[ERROR]: Failed to update versions:", error);
     process.exit(1);
