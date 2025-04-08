@@ -1,6 +1,8 @@
 {
   "version": "2.2.3-alpha",
   "$schema": "../node_modules/@tauri-apps/cli/config.schema.json",
+  "identifier": "io.github.clash-verge-rev.classes",
+  "productName": "classes",
   "bundle": {
     "active": true,
     "longDescription": "Clash Verge Rev",
@@ -23,9 +25,7 @@
     "copyright": "GNU General Public License v3.0",
     "category": "DeveloperTool",
     "shortDescription": "Clash Verge Rev",
-    "createUpdaterArtifacts": true,
-    "identifier": "io.github.clash-verge-rev.classes",
-    "productName": "classes"
+    "createUpdaterArtifacts": true
   },
   "build": {
     "beforeBuildCommand": "pnpm run web:build",
@@ -33,8 +33,6 @@
     "beforeDevCommand": "pnpm run web:dev",
     "devUrl": "http://localhost:3000/"
   },
-  "productName": "Clash Verge",
-  "identifier": "io.github.clash-verge-rev.clash-verge-rev",
   "plugins": {
     "updater": {
       "pubkey": "dW50cnVzdGVkIGNvbW1lbnQ6IG1pbmlzaWduIHB1YmxpYyBrZXk6IEQyOEMyRjBCQkVGOUJEREYKUldUZnZmbStDeStNMHU5Mmo1N24xQXZwSVRYbXA2NUpzZE5oVzlqeS9Bc0t6RVV4MmtwVjBZaHgK",
@@ -53,7 +51,6 @@
     "deep-link": {
       "desktop": {
         "schemes": [
-          "clash",
           "clash-verge"
         ]
       }
